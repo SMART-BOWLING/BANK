@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>Данные клиентов</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root {
+    --dark: #1f2937;
+    --accent: #dc143c;
+    --light: #f3f4f6;
+    --white: #ffffff;
+    --border: #e5e7eb;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --primary: #3b82f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+    background: var(--light);
+    padding: 30px;
+}
+
+.wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header h1 i {
+    color: var(--accent);
+    font-size: 28px;
+}
+
+.header p {
+    color: #6b7280;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.controls {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+}
+
+.controls-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.search-section {
+    flex: 2;
+    min-width: 300px;
+}
+
+.action-section {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 6px;
+}
+
+.search-field input,
+.search-field select {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    background: #f9fafb;
+    transition: all 0.2s;
+}
+
+.search-field input:focus,
+.search-field select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(220,20,60,0.1);
+}
+
+.search-actions {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.search-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-btn:hover {
+    background: #b01030;
+}
+
+.clear-btn {
+    background: var(--dark);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.clear-btn:hover {
+    background: #374151;
+}
+
+.add-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-btn:hover {
+    background: #2563eb;
+}
+
+.refresh-btn {
+    background: var(--dark);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.refresh-btn:hover {
+    background: #374151;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.table-container {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table th {
+    background: #f8fafc;
+    padding: 16px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--dark);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #f0f2f5;
+    color: #374151;
+}
+
+.data-table tr:hover {
+    background: #faf5ff;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.balance-positive {
+    color: var(--success);
+    font-weight: 600;
+}
+
+.balance-negative {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.balance-zero {
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.visits-badge {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 50px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-operation {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-withdraw {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.btn-withdraw:hover {
+    background: #fecaca;
+    transform: scale(1.02);
+}
+
+.btn-deposit {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.btn-deposit:hover {
+    background: #bbf7d0;
+    transform: scale(1.02);
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e2e8f0;
+    border-radius: 50%;
+    border-top-color: var(--dark);
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+}
+
+.empty-state i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 1000;
+    animation: fadeUp 0.25s ease;
+}
+
+.toast.error {
+    background: var(--accent);
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.date-cell {
+    white-space: nowrap;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--white);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalSlide 0.2s ease;
+}
+
+@keyframes modalSlide {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    color: var(--dark);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #9ca3af;
+}
+
+.modal-close:hover {
+    color: var(--dark);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 8px;
+}
+
+.form-group label i {
+    width: 20px;
+    color: var(--accent);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(220,20,60,0.1);
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #e5e7eb;
+    border: none;
+    color: var(--dark);
+}
+
+.btn-submit {
+    background: var(--primary);
+    border: none;
+    color: white;
+}
+
+.btn-submit:hover {
+    background: #2563eb;
+}
+
+@media (max-width: 768px) {
+    body { padding: 15px; }
+    .data-table th, .data-table td { padding: 10px 8px; font-size: 12px; }
+    .search-grid { grid-template-columns: 1fr; }
+    .search-actions { justify-content: stretch; }
+    .search-actions button { flex: 1; justify-content: center; }
+    .action-buttons { flex-direction: column; }
+    .controls-row { flex-direction: column; }
+    .action-section { width: 100%; }
+    .add-btn, .refresh-btn { flex: 1; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="header-row">
+            <h1><i class="fas fa-users"></i> Данные клиентов</h1>
+            <button class="refresh-btn" onclick="loadData(true)">
+                <i class="fas fa-sync-alt"></i> Обновить
+            </button>
+        </div>
+        <p>Фамилия | Имя | Дата рождения | Номер карты | Посещения | Баланс</p>
+    </div>
+
+    <div class="controls">
+        <div class="controls-row">
+            <div class="search-section">
+                <div class="search-grid">
+                    <div class="search-field">
+                        <label><i class="fas fa-user"></i> Поиск по фамилии</label>
+                        <input type="text" id="surnameSearch" placeholder="Введите фамилию...">
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-user"></i> Поиск по имени</label>
+                        <input type="text" id="nameSearch" placeholder="Введите имя...">
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-credit-card"></i> Поиск по карте</label>
+                        <input type="text" id="cardSearch" placeholder="Введите номер карты...">
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-calendar-alt"></i> Поиск по дате рождения</label>
+                        <input type="date" id="birthdaySearch" placeholder="Выберите дату">
+                    </div>
+                </div>
+                <div class="search-actions">
+                    <button id="searchBtn" class="search-btn">
+                        <i class="fas fa-search"></i> Найти
+                    </button>
+                    <button id="clearSearchBtn" class="clear-btn">
+                        <i class="fas fa-eraser"></i> Очистить
+                    </button>
+                </div>
+            </div>
+            <div class="action-section">
+                <button class="add-btn" onclick="openAddModal()">
+                    <i class="fas fa-plus-circle"></i> Добавить клиента
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <div id="tableContent">
+            <div class="empty-state">
+                <div class="loading-spinner"></div>
+                <p>Загрузка данных...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно добавления клиента -->
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-user-plus"></i> Добавление нового клиента</h2>
+            <button class="modal-close" onclick="closeAddModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label><i class="fas fa-user-tag"></i> Фамилия *</label>
+                <input type="text" id="addSurname" placeholder="Введите фамилию">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Имя *</label>
+                <input type="text" id="addName" placeholder="Введите имя">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-calendar-alt"></i> Дата рождения</label>
+                <input type="date" id="addBirthday">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-credit-card"></i> Номер карты *</label>
+                <input type="text" id="addCardNumber" placeholder="Введите номер карты">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-ruble-sign"></i> Начальный баланс</label>
+                <input type="number" id="addBalance" placeholder="0" value="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-chart-line"></i> Посещения</label>
+                <input type="text" value="1 (устанавливается автоматически)" disabled style="background:#f3f4f6; color:#6b7280;">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeAddModal()">Отмена</button>
+            <button class="btn-submit" onclick="addNewUser()"><i class="fas fa-save"></i> Добавить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZXiHFHKi0sj7slDoQ4PuXqUB2Hn7RVmDf_0J2tmma7qe4XT4oG6EhahrpHEbRdko7EA/exec';
+
+let allData = [];
+let isLoading = false;
+
+function formatDate(dateValue) {
+    if (!dateValue) return '—';
+    
+    let date;
+    if (dateValue instanceof Date) {
+        date = dateValue;
+    } else if (typeof dateValue === 'string') {
+        date = new Date(dateValue);
+        if (isNaN(date.getTime())) return dateValue;
+    } else if (typeof dateValue === 'number') {
+        date = new Date(dateValue);
+    } else {
+        return '—';
+    }
+    
+    if (isNaN(date.getTime())) return '—';
+    
+    const d = String(date.getDate()).padStart(2, '0');
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const y = date.getFullYear();
+    return `${d}.${m}.${y}`;
+}
+
+function formatDateForCompare(dateValue) {
+    if (!dateValue) return null;
+    
+    let date;
+    if (dateValue instanceof Date) {
+        date = dateValue;
+    } else if (typeof dateValue === 'string') {
+        date = new Date(dateValue);
+        if (isNaN(date.getTime())) return null;
+    } else if (typeof dateValue === 'number') {
+        date = new Date(dateValue);
+    } else {
+        return null;
+    }
+    
+    if (isNaN(date.getTime())) return null;
+    
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function formatNumber(value) {
+    if (value === null || value === undefined || value === '') return '0';
+    const num = typeof value === 'number' ? value : parseFloat(value);
+    if (isNaN(num)) return '0';
+    return num.toLocaleString('ru-RU');
+}
+
+function getBalanceClass(value) {
+    const num = typeof value === 'number' ? value : parseFloat(value);
+    if (isNaN(num)) return '';
+    if (num > 0) return 'balance-positive';
+    if (num < 0) return 'balance-negative';
+    return 'balance-zero';
+}
+
+function callScript(fn, data = null) {
+    return new Promise((resolve, reject) => {
+        const callbackName = 'cb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+        
+        window[callbackName] = function(response) {
+            delete window[callbackName];
+            if (response && response.error) {
+                reject(new Error(response.error));
+            } else if (response && response.result) {
+                if (response.result.error) {
+                    reject(new Error(response.result.error));
+                } else {
+                    resolve(response.result);
+                }
+            } else {
+                resolve(response);
+            }
+        };
+        
+        let url = `${SCRIPT_URL}?fn=${fn}&callback=${callbackName}`;
+        if (data) {
+            url += `&data=${encodeURIComponent(JSON.stringify(data))}`;
+        }
+        
+        const script = document.createElement('script');
+        script.src = url;
+        script.onerror = () => {
+            delete window[callbackName];
+            reject(new Error('Ошибка соединения с сервером'));
+        };
+        
+        document.body.appendChild(script);
+        setTimeout(() => {
+            if (window[callbackName]) {
+                delete window[callbackName];
+                reject(new Error('Таймаут запроса'));
+            }
+        }, 30000);
+    });
+}
+
+async function loadData(showLoading = true) {
+    if (isLoading) return;
+    isLoading = true;
+    
+    const container = document.getElementById('tableContent');
+    if (showLoading && container) {
+        container.innerHTML = '<div class="empty-state"><div class="loading-spinner"></div><p>Загрузка данных...</p></div>';
+    }
+    
+    try {
+        const data = await callScript('getData');
+        
+        if (data && data.error) throw new Error(data.error);
+        
+        allData = Array.isArray(data) ? data : [];
+        
+        applyFilters();
+        
+    } catch (err) {
+        console.error(err);
+        if (container) {
+            container.innerHTML = `<div class="empty-state">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Ошибка загрузки: ${err.message}</p>
+                <button onclick="loadData(true)" style="margin-top:16px;padding:8px 20px;background:#1f2937;color:white;border:none;border-radius:6px;cursor:pointer;">Повторить</button>
+            </div>`;
+        }
+        showToast(`Ошибка: ${err.message}`, true);
+    } finally {
+        isLoading = false;
+    }
+}
+
+function applyFilters() {
+    const surnameFilter = document.getElementById('surnameSearch').value.toLowerCase().trim();
+    const nameFilter = document.getElementById('nameSearch').value.toLowerCase().trim();
+    const cardFilter = document.getElementById('cardSearch').value.toLowerCase().trim();
+    const birthdaySearch = document.getElementById('birthdaySearch').value;
+    
+    let filtered = [...allData];
+    
+    if (surnameFilter) {
+        filtered = filtered.filter(item => 
+            item.surname && item.surname.toLowerCase().includes(surnameFilter)
+        );
+    }
+    
+    if (nameFilter) {
+        filtered = filtered.filter(item => 
+            item.name && item.name.toLowerCase().includes(nameFilter)
+        );
+    }
+    
+    if (cardFilter) {
+        filtered = filtered.filter(item => 
+            item.cardNumber && item.cardNumber.toLowerCase().includes(cardFilter)
+        );
+    }
+    
+    if (birthdaySearch) {
+        const searchDate = new Date(birthdaySearch);
+        searchDate.setHours(0, 0, 0, 0);
+        
+        filtered = filtered.filter(item => {
+            const itemDate = formatDateForCompare(item.birthday);
+            if (!itemDate) return false;
+            return itemDate.getTime() === searchDate.getTime();
+        });
+    }
+    
+    renderTable(filtered);
+}
+
+async function handleWithdraw(row, surname, name) {
+    const amount = prompt(`Введите сумму снятия для ${surname} ${name}:\n(посещение будет увеличено на 1)`, "0");
+    if (amount === null) return;
+    
+    const numAmount = parseFloat(amount);
+    if (isNaN(numAmount) || numAmount <= 0) {
+        showToast("Введите корректную сумму", true);
+        return;
+    }
+    
+    try {
+        const result = await callScript('withdraw', { row: row, amount: numAmount });
+        if (result.error) throw new Error(result.error);
+        
+        showToast(`✅ ${surname} ${name}: ${result.message}`);
+        await loadData(false);
+    } catch (err) {
+        showToast(`Ошибка: ${err.message}`, true);
+    }
+}
+
+async function handleDeposit(row, surname, name) {
+    const amount = prompt(`Введите сумму пополнения для ${surname} ${name}:`, "0");
+    if (amount === null) return;
+    
+    const numAmount = parseFloat(amount);
+    if (isNaN(numAmount) || numAmount <= 0) {
+        showToast("Введите корректную сумму", true);
+        return;
+    }
+    
+    try {
+        const result = await callScript('deposit', { row: row, amount: numAmount });
+        if (result.error) throw new Error(result.error);
+        
+        showToast(`✅ ${surname} ${name}: ${result.message}`);
+        await loadData(false);
+    } catch (err) {
+        showToast(`Ошибка: ${err.message}`, true);
+    }
+}
+
+async function addNewUser() {
+    const surname = document.getElementById('addSurname').value.trim();
+    const name = document.getElementById('addName').value.trim();
+    const birthday = document.getElementById('addBirthday').value;
+    const cardNumber = document.getElementById('addCardNumber').value.trim();
+    const balance = parseFloat(document.getElementById('addBalance').value) || 0;
+    const visits = 1;
+    
+    if (!surname) {
+        showToast("Введите фамилию", true);
+        return;
+    }
+    if (!name) {
+        showToast("Введите имя", true);
+        return;
+    }
+    if (!cardNumber) {
+        showToast("Введите номер карты", true);
+        return;
+    }
+    
+    try {
+        const result = await callScript('addUser', { 
+            surname: surname,
+            name: name,
+            birthday: birthday || null,
+            cardNumber: cardNumber,
+            visits: visits,
+            balance: balance
+        });
+        
+        if (result.error) throw new Error(result.error);
+        
+        showToast(`✅ Клиент ${surname} ${name} успешно добавлен`);
+        closeAddModal();
+        await loadData(true);
+        
+        document.getElementById('addSurname').value = '';
+        document.getElementById('addName').value = '';
+        document.getElementById('addBirthday').value = '';
+        document.getElementById('addCardNumber').value = '';
+        document.getElementById('addBalance').value = '0';
+        
+    } catch (err) {
+        showToast(`Ошибка: ${err.message}`, true);
+    }
+}
+
+function openAddModal() {
+    document.getElementById('addModal').classList.add('active');
+}
+
+function closeAddModal() {
+    document.getElementById('addModal').classList.remove('active');
+}
+
+function renderTable(data) {
+    const container = document.getElementById('tableContent');
+    if (!container) return;
+    
+    if (!data.length) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Нет данных для отображения</p></div>';
+        return;
+    }
+    
+    const table = document.createElement('table');
+    table.className = 'data-table';
+    
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Фамилия', 'Имя', 'Дата рождения', 'Номер карты', 'Посещения', 'Баланс', 'Действия'];
+    headers.forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+    
+    const tbody = document.createElement('tbody');
+    data.forEach(item => {
+        const tr = document.createElement('tr');
+        
+        tr.appendChild(createCell(item.surname || '—'));
+        tr.appendChild(createCell(item.name || '—'));
+        tr.appendChild(createCell(formatDate(item.birthday), 'date-cell'));
+        tr.appendChild(createCell(item.cardNumber || '—'));
+        
+        const visitsCell = createCell('');
+        const visitsSpan = document.createElement('span');
+        visitsSpan.className = 'visits-badge';
+        visitsSpan.textContent = item.visits || 0;
+        visitsCell.appendChild(visitsSpan);
+        tr.appendChild(visitsCell);
+        
+        const balanceCell = createCell(formatNumber(item.balance));
+        balanceCell.className = getBalanceClass(item.balance);
+        tr.appendChild(balanceCell);
+        
+        const actionCell = createCell('');
+        actionCell.className = 'action-buttons';
+        
+        const withdrawBtn = document.createElement('button');
+        withdrawBtn.className = 'btn-operation btn-withdraw';
+        withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Снятие (+1 посещение)';
+        withdrawBtn.onclick = () => handleWithdraw(item.row, item.surname, item.name);
+        
+        const depositBtn = document.createElement('button');
+        depositBtn.className = 'btn-operation btn-deposit';
+        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Пополнение';
+        depositBtn.onclick = () => handleDeposit(item.row, item.surname, item.name);
+        
+        actionCell.appendChild(withdrawBtn);
+        actionCell.appendChild(depositBtn);
+        tr.appendChild(actionCell);
+        
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    
+    container.innerHTML = '';
+    container.appendChild(table);
+}
+
+function createCell(content, className = '') {
+    const td = document.createElement('td');
+    if (typeof content === 'string') {
+        td.textContent = content;
+    } else {
+        td.appendChild(content);
+    }
+    if (className) td.className = className;
+    return td;
+}
+
+function clearSearch() {
+    document.getElementById('surnameSearch').value = '';
+    document.getElementById('nameSearch').value = '';
+    document.getElementById('cardSearch').value = '';
+    document.getElementById('birthdaySearch').value = '';
+    applyFilters();
+    showToast('Поиск очищен');
+}
+
+function showToast(msg, isError = false) {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast' + (isError ? ' error' : '');
+    toast.innerHTML = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+function handleKeyPress(e) {
+    if (e.key === 'Enter') {
+        applyFilters();
+    }
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('addModal');
+    if (event.target === modal) {
+        closeAddModal();
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('searchBtn').addEventListener('click', applyFilters);
+    document.getElementById('clearSearchBtn').addEventListener('click', clearSearch);
+    document.getElementById('surnameSearch').addEventListener('keypress', handleKeyPress);
+    document.getElementById('nameSearch').addEventListener('keypress', handleKeyPress);
+    document.getElementById('cardSearch').addEventListener('keypress', handleKeyPress);
+    document.getElementById('birthdaySearch').addEventListener('change', applyFilters);
+    
+    loadData(true);
+});
+
+window.loadData = loadData;
+window.clearSearch = clearSearch;
+window.applyFilters = applyFilters;
+window.openAddModal = openAddModal;
+window.closeAddModal = closeAddModal;
+window.addNewUser = addNewUser;
+</script>
+</body>
+</html>
