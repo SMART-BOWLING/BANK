@@ -122,43 +122,47 @@ body {
 }
 
 .search-btn {
-    background: var(--accent);
+    background: #0174fd;
     color: white;
     border: none;
 }
 
 .search-btn:hover {
-    background: #b01030;
+    background: #0174fd;
+    opacity: 0.85;
 }
 
 .clear-btn {
-    background: var(--dark);
+    background: #0174fd;
     color: white;
     border: none;
 }
 
 .clear-btn:hover {
-    background: #374151;
+    background: #0174fd;
+    opacity: 0.85;
 }
 
 .refresh-btn {
-    background: var(--dark);
+    background: #0174fd;
     color: white;
     border: none;
 }
 
 .refresh-btn:hover {
-    background: #374151;
+    background: #0174fd;
+    opacity: 0.85;
 }
 
 .add-btn {
-    background: var(--primary);
+    background: #0174fd;
     color: white;
     border: none;
 }
 
 .add-btn:hover {
-    background: #2563eb;
+    background: #0174fd;
+    opacity: 0.85;
 }
 
 .add-btn:disabled {
@@ -231,9 +235,9 @@ body {
 .search-field input:focus,
 .search-field select:focus {
     outline: none;
-    border-color: var(--accent);
+    border-color: #0174fd;
     background: var(--white);
-    box-shadow: 0 0 0 3px rgba(220,20,60,0.1);
+    box-shadow: 0 0 0 3px rgba(1,116,253,0.1);
 }
 
 .table-container {
@@ -272,7 +276,7 @@ body {
 }
 
 .data-table tr:hover {
-    background: #faf5ff;
+    background: #f0f7ff;
 }
 
 .data-table tr:last-child td {
@@ -295,7 +299,7 @@ body {
 }
 
 .balance-negative {
-    color: var(--accent);
+    color: #0174fd;
     font-weight: 600;
 }
 
@@ -413,7 +417,7 @@ body {
 }
 
 .toast.error {
-    background: var(--accent);
+    background: #0174fd;
 }
 
 @keyframes fadeUp {
@@ -502,7 +506,7 @@ body {
 
 .form-group label i {
     width: 20px;
-    color: var(--accent);
+    color: #0174fd;
 }
 
 .form-group input {
@@ -516,8 +520,8 @@ body {
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(220,20,60,0.1);
+    border-color: #0174fd;
+    box-shadow: 0 0 0 3px rgba(1,116,253,0.1);
 }
 
 .modal-footer {
@@ -548,7 +552,7 @@ body {
 }
 
 .btn-submit {
-    background: var(--primary);
+    background: #0174fd;
     border: none;
     color: white;
     display: inline-flex;
@@ -557,7 +561,8 @@ body {
 }
 
 .btn-submit:hover:not(:disabled) {
-    background: #2563eb;
+    background: #0174fd;
+    opacity: 0.85;
 }
 
 @media (max-width: 768px) {
@@ -822,7 +827,7 @@ async function loadData(showLoading = true) {
             container.innerHTML = `<div class="empty-state">
                 <i class="fas fa-exclamation-triangle"></i>
                 <p>Помилка завантаження: ${err.message}</p>
-                <button onclick="loadData(true)" style="margin-top:16px;padding:8px 20px;background:#1f2937;color:white;border:none;border-radius:6px;cursor:pointer;">Повторити</button>
+                <button onclick="loadData(true)" style="margin-top:16px;padding:8px 20px;background:#0174fd;color:white;border:none;border-radius:6px;cursor:pointer;">Повторити</button>
             </div>`;
         }
         showToast(`Помилка: ${err.message}`, true);
