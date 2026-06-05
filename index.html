@@ -26,42 +26,159 @@
 
 body {
     background: var(--light);
-    padding: 30px;
+    padding: 0;
+    margin: 0;
 }
 
 .wrapper {
     max-width: 1400px;
     margin: 0 auto;
+    padding: 0;
 }
 
 .header {
     background: var(--white);
-    border-radius: 12px;
-    padding: 24px 28px;
+    border-radius: 0;
+    padding: 0;
     margin-bottom: 24px;
-    border: 1px solid var(--border);
+    border: none;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.header h1 {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--dark);
+.header-row {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
 }
 
-.header h1 i {
-    color: var(--accent);
-    font-size: 28px;
+/* Баннер - увеличенной высоты, без отступов */
+.banner-area {
+    flex: 1;
+    min-width: 200px;
+    height: auto;
+    min-height: 120px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.banner-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner-placeholder {
+    color: rgba(255,255,255,0.9);
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
+    font-weight: 500;
+}
+
+.banner-placeholder i {
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.banner-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+/* Контейнер с кнопками - теперь с минимальными отступами */
+.header-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    flex-wrap: wrap;
+    padding: 0;
+    background: var(--white);
+}
+
+/* Все кнопки увеличены по высоте */
+.search-btn, .clear-btn, .refresh-btn, .add-btn {
+    padding: 0 28px;
+    border-radius: 0;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    height: 100%;
+    min-height: 120px;
+    margin: 0;
+}
+
+.search-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+}
+
+.search-btn:hover {
+    background: #b01030;
+}
+
+.clear-btn {
+    background: var(--dark);
+    color: white;
+    border: none;
+}
+
+.clear-btn:hover {
+    background: #374151;
+}
+
+.refresh-btn {
+    background: var(--dark);
+    color: white;
+    border: none;
+}
+
+.refresh-btn:hover {
+    background: #374151;
+}
+
+.add-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+}
+
+.add-btn:hover {
+    background: #2563eb;
+}
+
+.add-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Иконки в кнопках увеличены */
+.search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
+    font-size: 18px;
 }
 
 .controls {
     background: var(--white);
     border-radius: 12px;
     padding: 20px 24px;
-    margin-bottom: 24px;
+    margin: 0 28px 24px 28px;
     border: 1px solid var(--border);
 }
 
@@ -131,92 +248,6 @@ body {
     margin-top: 8px;
 }
 
-.search-btn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.search-btn:hover {
-    background: #b01030;
-}
-
-.clear-btn {
-    background: var(--dark);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.clear-btn:hover {
-    background: #374151;
-}
-
-.add-btn {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.add-btn:hover {
-    background: #2563eb;
-}
-
-.refresh-btn {
-    background: var(--dark);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.refresh-btn:hover {
-    background: #374151;
-}
-
-.header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-
-.header-buttons {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
 .table-container {
     background: var(--white);
     border-radius: 12px;
@@ -224,6 +255,7 @@ body {
     overflow-x: auto;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     padding: 0;
+    margin: 0 28px 24px 28px;
 }
 
 .data-table {
@@ -259,7 +291,6 @@ body {
     border-bottom: none;
 }
 
-/* Симметричные отступы для колонок */
 .data-table th:first-child,
 .data-table td:first-child {
     padding-left: 24px;
@@ -312,6 +343,15 @@ body {
     font-size: 12px;
     font-weight: 500;
     transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-operation:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .btn-deposit {
@@ -319,7 +359,7 @@ body {
     color: #16a34a;
 }
 
-.btn-deposit:hover {
+.btn-deposit:hover:not(:disabled) {
     background: #bbf7d0;
     transform: scale(1.02);
 }
@@ -329,9 +369,23 @@ body {
     color: #dc2626;
 }
 
-.btn-withdraw:hover {
+.btn-withdraw:hover:not(:disabled) {
     background: #fecaca;
     transform: scale(1.02);
+}
+
+.btn-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .loading-spinner {
@@ -342,10 +396,6 @@ body {
     border-radius: 50%;
     border-top-color: var(--dark);
     animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
 }
 
 .empty-state {
@@ -389,7 +439,6 @@ body {
     color: #6b7280;
 }
 
-/* Модальное окно */
 .modal {
     display: none;
     position: fixed;
@@ -496,6 +545,12 @@ body {
     border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-footer button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 .btn-cancel {
@@ -508,14 +563,19 @@ body {
     background: var(--primary);
     border: none;
     color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.btn-submit:hover {
+.btn-submit:hover:not(:disabled) {
     background: #2563eb;
 }
 
 @media (max-width: 768px) {
-    body { padding: 15px; }
+    body { padding: 0; }
+    .controls { margin: 0 15px 20px 15px; padding: 15px; }
+    .table-container { margin: 0 15px 20px 15px; }
     .data-table th, .data-table td { padding: 10px 8px; font-size: 12px; }
     .data-table th:first-child,
     .data-table td:first-child {
@@ -527,7 +587,19 @@ body {
     }
     .search-grid { grid-template-columns: 1fr; }
     .header-row { flex-direction: column; align-items: stretch; }
-    .header-buttons { justify-content: center; }
+    .banner-area { min-height: 80px; }
+    .header-buttons { 
+        justify-content: center; 
+        padding: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .search-btn, .clear-btn, .refresh-btn, .add-btn {
+        min-height: 60px;
+        padding: 0 20px;
+        flex: 1;
+        justify-content: center;
+    }
     .action-buttons { flex-direction: column; }
     .controls-row { flex-direction: column; }
     .action-section { width: 100%; }
@@ -538,7 +610,15 @@ body {
 <div class="wrapper">
     <div class="header">
         <div class="header-row">
-            <h1><i class="fas fa-users"></i> Данные клиентов</h1>
+            <!-- ОБЛАСТЬ ДЛЯ БАННЕРА УВЕЛИЧЕННОЙ ВЫСОТЫ -->
+            <div class="banner-area" id="bannerContainer">
+                <!-- ТЕКСТ-ЗАГЛУШКА (УДАЛИ КОГДА ВСТАВИШЬ БАННЕР) -->
+                <div class="banner-placeholder">
+                    <i class="fas fa-image"></i> Место для баннера<br>
+                    Высота: 120px
+                </div>
+            </div>
+            
             <div class="header-buttons">
                 <button id="searchBtnHeader" class="search-btn">
                     <i class="fas fa-search"></i> Найти
@@ -591,7 +671,6 @@ body {
     </div>
 </div>
 
-<!-- Модальное окно добавления клиента -->
 <div id="addModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -626,7 +705,7 @@ body {
         </div>
         <div class="modal-footer">
             <button class="btn-cancel" onclick="closeAddModal()">Отмена</button>
-            <button class="btn-submit" onclick="addNewUser()"><i class="fas fa-save"></i> Добавить</button>
+            <button class="btn-submit" id="submitAddBtn" onclick="addNewUser()"><i class="fas fa-save"></i> Добавить</button>
         </div>
     </div>
 </div>
@@ -809,28 +888,38 @@ function applyFilters() {
     renderTable(filtered);
 }
 
-async function handleDeposit(row, surname, name) {
-    const amount = prompt(`Введите сумму пополнения для ${surname} ${name}:`, "0");
+async function handleDeposit(row, surname, name, button) {
+    const amount = prompt(`Введите сумму пополнения для ${surname} ${name}:\n(будет добавлен бонус 5%)`, "0");
     if (amount === null) return;
     
-    const numAmount = parseFloat(amount);
+    let numAmount = parseFloat(amount);
     if (isNaN(numAmount) || numAmount <= 0) {
         showToast("Введите корректную сумму", true);
         return;
     }
     
+    const bonus = numAmount * 0.05;
+    const totalAmount = numAmount + bonus;
+    
+    const originalHtml = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<span class="btn-spinner"></span> Загрузка...';
+    
     try {
-        const result = await callScript('deposit', { row: row, amount: numAmount });
+        const result = await callScript('deposit', { row: row, amount: totalAmount });
         if (result.error) throw new Error(result.error);
         
-        showToast(`✅ ${surname} ${name}: ${result.message}`);
+        showToast(`✅ ${surname} ${name}: Пополнение на ${numAmount.toFixed(2)}₽ + бонус 5% (${bonus.toFixed(2)}₽) = ${totalAmount.toFixed(2)}₽`);
         await loadData(false);
     } catch (err) {
         showToast(`Ошибка: ${err.message}`, true);
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalHtml;
     }
 }
 
-async function handleWithdraw(row, surname, name) {
+async function handleWithdraw(row, surname, name, button) {
     const amount = prompt(`Введите сумму снятия для ${surname} ${name}:`, "0");
     if (amount === null) return;
     
@@ -840,6 +929,10 @@ async function handleWithdraw(row, surname, name) {
         return;
     }
     
+    const originalHtml = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<span class="btn-spinner"></span> Загрузка...';
+    
     try {
         const result = await callScript('withdraw', { row: row, amount: numAmount });
         if (result.error) throw new Error(result.error);
@@ -848,6 +941,9 @@ async function handleWithdraw(row, surname, name) {
         await loadData(false);
     } catch (err) {
         showToast(`Ошибка: ${err.message}`, true);
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalHtml;
     }
 }
 
@@ -871,6 +967,12 @@ async function addNewUser() {
         showToast("Введите номер карты", true);
         return;
     }
+    
+    const submitBtn = document.getElementById('submitAddBtn');
+    const originalHtml = submitBtn.innerHTML;
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="btn-spinner"></span> Добавление...';
     
     try {
         const result = await callScript('addUser', { 
@@ -896,6 +998,9 @@ async function addNewUser() {
         
     } catch (err) {
         showToast(`Ошибка: ${err.message}`, true);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalHtml;
     }
 }
 
@@ -955,13 +1060,19 @@ function renderTable(data) {
         
         const depositBtn = document.createElement('button');
         depositBtn.className = 'btn-operation btn-deposit';
-        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Пополнение';
-        depositBtn.onclick = () => handleDeposit(item.row, item.surname, item.name);
+        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Пополнение (+5%)';
+        depositBtn.onclick = (e) => {
+            e.preventDefault();
+            handleDeposit(item.row, item.surname, item.name, depositBtn);
+        };
         
         const withdrawBtn = document.createElement('button');
         withdrawBtn.className = 'btn-operation btn-withdraw';
         withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Снятие';
-        withdrawBtn.onclick = () => handleWithdraw(item.row, item.surname, item.name);
+        withdrawBtn.onclick = (e) => {
+            e.preventDefault();
+            handleWithdraw(item.row, item.surname, item.name, withdrawBtn);
+        };
         
         actionCell.appendChild(depositBtn);
         actionCell.appendChild(withdrawBtn);
@@ -1020,11 +1131,9 @@ window.onclick = function(event) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    // Кнопки в шапке
     document.getElementById('searchBtnHeader').addEventListener('click', applyFilters);
     document.getElementById('clearSearchBtnHeader').addEventListener('click', clearSearch);
     
-    // Поля поиска
     document.getElementById('surnameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('nameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('cardSearch').addEventListener('keypress', handleKeyPress);
