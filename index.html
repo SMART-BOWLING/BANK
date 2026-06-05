@@ -57,12 +57,6 @@ body {
     font-size: 28px;
 }
 
-.header p {
-    color: #6b7280;
-    margin-top: 8px;
-    font-size: 14px;
-}
-
 .controls {
     background: var(--white);
     border-radius: 12px;
@@ -216,36 +210,45 @@ body {
     gap: 16px;
 }
 
+.header-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .table-container {
     background: var(--white);
     border-radius: 12px;
     border: 1px solid var(--border);
     overflow-x: auto;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    padding: 0;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
+    table-layout: fixed;
 }
 
 .data-table th {
     background: #f8fafc;
     padding: 16px 12px;
-    text-align: left;
+    text-align: center;
     font-weight: 600;
     color: var(--dark);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
-    white-space: nowrap;
 }
 
 .data-table td {
     padding: 14px 12px;
     border-bottom: 1px solid #f0f2f5;
     color: #374151;
+    text-align: center;
 }
 
 .data-table tr:hover {
@@ -254,6 +257,17 @@ body {
 
 .data-table tr:last-child td {
     border-bottom: none;
+}
+
+/* Симметричные отступы для колонок */
+.data-table th:first-child,
+.data-table td:first-child {
+    padding-left: 24px;
+}
+
+.data-table th:last-child,
+.data-table td:last-child {
+    padding-right: 24px;
 }
 
 .balance-positive {
@@ -287,6 +301,7 @@ body {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .btn-operation {
@@ -299,16 +314,6 @@ body {
     transition: all 0.2s;
 }
 
-.btn-withdraw {
-    background: #fee2e2;
-    color: #dc2626;
-}
-
-.btn-withdraw:hover {
-    background: #fecaca;
-    transform: scale(1.02);
-}
-
 .btn-deposit {
     background: #dcfce7;
     color: #16a34a;
@@ -316,6 +321,16 @@ body {
 
 .btn-deposit:hover {
     background: #bbf7d0;
+    transform: scale(1.02);
+}
+
+.btn-withdraw {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.btn-withdraw:hover {
+    background: #fecaca;
     transform: scale(1.02);
 }
 
@@ -502,13 +517,20 @@ body {
 @media (max-width: 768px) {
     body { padding: 15px; }
     .data-table th, .data-table td { padding: 10px 8px; font-size: 12px; }
+    .data-table th:first-child,
+    .data-table td:first-child {
+        padding-left: 16px;
+    }
+    .data-table th:last-child,
+    .data-table td:last-child {
+        padding-right: 16px;
+    }
     .search-grid { grid-template-columns: 1fr; }
-    .search-actions { justify-content: stretch; }
-    .search-actions button { flex: 1; justify-content: center; }
+    .header-row { flex-direction: column; align-items: stretch; }
+    .header-buttons { justify-content: center; }
     .action-buttons { flex-direction: column; }
     .controls-row { flex-direction: column; }
     .action-section { width: 100%; }
-    .add-btn, .refresh-btn { flex: 1; justify-content: center; }
 }
 </style>
 </head>
@@ -517,11 +539,21 @@ body {
     <div class="header">
         <div class="header-row">
             <h1><i class="fas fa-users"></i> Данные клиентов</h1>
-            <button class="refresh-btn" onclick="loadData(true)">
-                <i class="fas fa-sync-alt"></i> Обновить
-            </button>
+            <div class="header-buttons">
+                <button id="searchBtnHeader" class="search-btn">
+                    <i class="fas fa-search"></i> Найти
+                </button>
+                <button id="clearSearchBtnHeader" class="clear-btn">
+                    <i class="fas fa-eraser"></i> Очистить
+                </button>
+                <button class="refresh-btn" onclick="loadData(true)">
+                    <i class="fas fa-sync-alt"></i> Обновить
+                </button>
+                <button class="add-btn" onclick="openAddModal()">
+                    <i class="fas fa-plus-circle"></i> Добавить клиента
+                </button>
+            </div>
         </div>
-        <p>Фамилия | Имя | Дата рождения | Номер карты | Посещения | Баланс</p>
     </div>
 
     <div class="controls">
@@ -545,19 +577,6 @@ body {
                         <input type="date" id="birthdaySearch" placeholder="Выберите дату">
                     </div>
                 </div>
-                <div class="search-actions">
-                    <button id="searchBtn" class="search-btn">
-                        <i class="fas fa-search"></i> Найти
-                    </button>
-                    <button id="clearSearchBtn" class="clear-btn">
-                        <i class="fas fa-eraser"></i> Очистить
-                    </button>
-                </div>
-            </div>
-            <div class="action-section">
-                <button class="add-btn" onclick="openAddModal()">
-                    <i class="fas fa-plus-circle"></i> Добавить клиента
-                </button>
             </div>
         </div>
     </div>
@@ -790,27 +809,6 @@ function applyFilters() {
     renderTable(filtered);
 }
 
-async function handleWithdraw(row, surname, name) {
-    const amount = prompt(`Введите сумму снятия для ${surname} ${name}:\n(посещение будет увеличено на 1)`, "0");
-    if (amount === null) return;
-    
-    const numAmount = parseFloat(amount);
-    if (isNaN(numAmount) || numAmount <= 0) {
-        showToast("Введите корректную сумму", true);
-        return;
-    }
-    
-    try {
-        const result = await callScript('withdraw', { row: row, amount: numAmount });
-        if (result.error) throw new Error(result.error);
-        
-        showToast(`✅ ${surname} ${name}: ${result.message}`);
-        await loadData(false);
-    } catch (err) {
-        showToast(`Ошибка: ${err.message}`, true);
-    }
-}
-
 async function handleDeposit(row, surname, name) {
     const amount = prompt(`Введите сумму пополнения для ${surname} ${name}:`, "0");
     if (amount === null) return;
@@ -823,6 +821,27 @@ async function handleDeposit(row, surname, name) {
     
     try {
         const result = await callScript('deposit', { row: row, amount: numAmount });
+        if (result.error) throw new Error(result.error);
+        
+        showToast(`✅ ${surname} ${name}: ${result.message}`);
+        await loadData(false);
+    } catch (err) {
+        showToast(`Ошибка: ${err.message}`, true);
+    }
+}
+
+async function handleWithdraw(row, surname, name) {
+    const amount = prompt(`Введите сумму снятия для ${surname} ${name}:`, "0");
+    if (amount === null) return;
+    
+    const numAmount = parseFloat(amount);
+    if (isNaN(numAmount) || numAmount <= 0) {
+        showToast("Введите корректную сумму", true);
+        return;
+    }
+    
+    try {
+        const result = await callScript('withdraw', { row: row, amount: numAmount });
         if (result.error) throw new Error(result.error);
         
         showToast(`✅ ${surname} ${name}: ${result.message}`);
@@ -934,18 +953,18 @@ function renderTable(data) {
         const actionCell = createCell('');
         actionCell.className = 'action-buttons';
         
-        const withdrawBtn = document.createElement('button');
-        withdrawBtn.className = 'btn-operation btn-withdraw';
-        withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Снятие (+1 посещение)';
-        withdrawBtn.onclick = () => handleWithdraw(item.row, item.surname, item.name);
-        
         const depositBtn = document.createElement('button');
         depositBtn.className = 'btn-operation btn-deposit';
         depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Пополнение';
         depositBtn.onclick = () => handleDeposit(item.row, item.surname, item.name);
         
-        actionCell.appendChild(withdrawBtn);
+        const withdrawBtn = document.createElement('button');
+        withdrawBtn.className = 'btn-operation btn-withdraw';
+        withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Снятие';
+        withdrawBtn.onclick = () => handleWithdraw(item.row, item.surname, item.name);
+        
         actionCell.appendChild(depositBtn);
+        actionCell.appendChild(withdrawBtn);
         tr.appendChild(actionCell);
         
         tbody.appendChild(tr);
@@ -1001,8 +1020,11 @@ window.onclick = function(event) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('searchBtn').addEventListener('click', applyFilters);
-    document.getElementById('clearSearchBtn').addEventListener('click', clearSearch);
+    // Кнопки в шапке
+    document.getElementById('searchBtnHeader').addEventListener('click', applyFilters);
+    document.getElementById('clearSearchBtnHeader').addEventListener('click', clearSearch);
+    
+    // Поля поиска
     document.getElementById('surnameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('nameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('cardSearch').addEventListener('keypress', handleKeyPress);
