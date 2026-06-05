@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-<title>БАНК КІДЛАНДІЯ</title>
+<title>Дані клієнтів</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 :root {
@@ -599,10 +599,7 @@ body {
     <div class="header">
         <div class="header-row">
             <div class="banner-area" id="bannerContainer">
-                <div class="banner-placeholder">
-                    <i class="fas fa-image"></i> Місце для банера<br>
-                    Висота: 120px
-                </div>
+                <img src="https://res.cloudinary.com/dplmdnxvk/image/upload/v1780686151/vppmopo1seie9csknvvd.png" alt="Банер">
             </div>
             
             <div class="header-buttons">
@@ -940,7 +937,6 @@ async function addNewUser() {
     const cardNumber = document.getElementById('addCardNumber').value.trim();
     let balance = parseFloat(document.getElementById('addBalance').value);
     
-    // Если поле баланса пустое или не число, устанавливаем 0
     if (isNaN(balance)) {
         balance = 0;
     }
@@ -1002,7 +998,6 @@ function openAddModal() {
 
 function closeAddModal() {
     document.getElementById('addModal').classList.remove('active');
-    // Очищаем поле баланса при закрытии модального окна
     document.getElementById('addBalance').value = '';
 }
 
