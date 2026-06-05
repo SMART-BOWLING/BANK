@@ -28,11 +28,14 @@ body {
     background: var(--light);
     padding: 0;
     margin: 0;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
     padding: 0;
 }
 
@@ -43,6 +46,7 @@ body {
     margin-bottom: 24px;
     border: none;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    width: 100%;
 }
 
 .header-row {
@@ -53,6 +57,7 @@ body {
     gap: 0;
     background: var(--white);
     border-bottom: 1px solid var(--border);
+    width: 100%;
 }
 
 .banner-area {
@@ -99,7 +104,7 @@ body {
 
 .header-buttons {
     display: flex;
-    gap: 12px;
+    gap: 0;
     align-items: stretch;
     flex-wrap: wrap;
     padding: 0;
@@ -119,12 +124,17 @@ body {
     height: 100%;
     min-height: 120px;
     margin: 0;
+    border: none;
+    border-left: 1px solid rgba(255,255,255,0.2);
+}
+
+.search-btn:first-child, .clear-btn:first-child, .refresh-btn:first-child, .add-btn:first-child {
+    border-left: none;
 }
 
 .search-btn {
     background: var(--accent);
     color: white;
-    border: none;
 }
 
 .search-btn:hover {
@@ -134,7 +144,6 @@ body {
 .clear-btn {
     background: var(--dark);
     color: white;
-    border: none;
 }
 
 .clear-btn:hover {
@@ -144,7 +153,6 @@ body {
 .refresh-btn {
     background: var(--dark);
     color: white;
-    border: none;
 }
 
 .refresh-btn:hover {
@@ -154,7 +162,6 @@ body {
 .add-btn {
     background: var(--primary);
     color: white;
-    border: none;
 }
 
 .add-btn:hover {
@@ -172,10 +179,13 @@ body {
 
 .controls {
     background: var(--white);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 20px 24px;
-    margin: 0 28px 24px 28px;
-    border: 1px solid var(--border);
+    margin: 0 0 24px 0;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    width: 100%;
 }
 
 .controls-row {
@@ -184,6 +194,9 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
 .search-section {
@@ -238,19 +251,19 @@ body {
 
 .table-container {
     background: var(--white);
-    border-radius: 12px;
-    border: 1px solid var(--border);
+    border-radius: 0;
+    border: none;
     overflow-x: auto;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: none;
     padding: 0;
-    margin: 0 28px 24px 28px;
+    margin: 0;
+    width: 100%;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
-    table-layout: fixed;
 }
 
 .data-table th {
@@ -562,8 +575,8 @@ body {
 
 @media (max-width: 768px) {
     body { padding: 0; }
-    .controls { margin: 0 15px 20px 15px; padding: 15px; }
-    .table-container { margin: 0 15px 20px 15px; }
+    .controls-row { padding: 0 15px; }
+    .controls { padding: 15px; }
     .data-table th, .data-table td { padding: 10px 8px; font-size: 12px; }
     .data-table th:first-child,
     .data-table td:first-child {
@@ -587,6 +600,7 @@ body {
         padding: 0 20px;
         flex: 1;
         justify-content: center;
+        border-left: none;
     }
     .action-buttons { flex-direction: column; }
     .controls-row { flex-direction: column; }
