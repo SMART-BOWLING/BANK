@@ -324,16 +324,17 @@ body {
     font-weight: 700;
 }
 
+/* Стиль для цифр відвідувань - без підкладки, чорний текст як всюди */
 .visits-badge {
     display: inline-block;
-    background: #e0e7ff;
-    color: #4338ca;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 14px;       /* трохи збільшено */
+    color: #374151;       /* такий самий чорний колір, як у інших цифр */
     font-weight: 700;
+    font-size: 15px;
     text-align: center;
     min-width: 50px;
+    background: transparent;  /* прибрано фон */
+    padding: 0;               /* прибрано падінги, щоб не було "подушки" */
+    border-radius: 0;
 }
 
 .action-buttons {
@@ -348,7 +349,7 @@ body {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 13px;       /* кнопки дій трохи збільшені, але не агресивно */
+    font-size: 13px;
     font-weight: 700;
     transition: all 0.2s;
     display: inline-flex;
@@ -362,23 +363,26 @@ body {
     transform: none;
 }
 
+/* НОВІ КОЛЬОРИ: поповнення - #017afe, зняття - #e41598 */
 .btn-deposit {
-    background: #dcfce7;
-    color: #16a34a;
+    background: #017afe;
+    color: white;
+    border: none;
 }
 
 .btn-deposit:hover:not(:disabled) {
-    background: #bbf7d0;
+    background: #0165cc;
     transform: scale(1.02);
 }
 
 .btn-withdraw {
-    background: #fee2e2;
-    color: #dc2626;
+    background: #e41598;
+    color: white;
+    border: none;
 }
 
 .btn-withdraw:hover:not(:disabled) {
-    background: #fecaca;
+    background: #c01080;
     transform: scale(1.02);
 }
 
@@ -637,9 +641,9 @@ body {
         padding: 0 16px;
         flex: 1;
         justify-content: center;
-        font-size: 14px; /* кнопки залишаються помірними */
+        font-size: 14px;
     }
-    .action-buttons { flex-direction: column; }
+    .action-buttons { flex-direction: column; align-items: center; }
     .controls-row { flex-direction: column; }
     .action-section { width: 100%; }
     .modal-header h2 { font-size: 20px; }
@@ -1088,6 +1092,7 @@ function renderTable(data) {
         tr.appendChild(createCell(formatDate(item.birthday), 'date-cell'));
         tr.appendChild(createCell(item.cardNumber || '—'));
         
+        // Колонка відвідування: тільки цифри, без підкладки, стандартний колір тексту
         const visitsCell = createCell('');
         const visitsSpan = document.createElement('span');
         visitsSpan.className = 'visits-badge';
