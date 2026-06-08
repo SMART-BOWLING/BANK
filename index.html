@@ -189,6 +189,10 @@ body {
     margin-bottom: 6px;
 }
 
+.search-field label i {
+    margin-right: 6px;
+}
+
 .search-field input,
 .search-field select {
     width: 100%;
@@ -641,8 +645,16 @@ body {
                         <input type="text" id="parentSearch" placeholder="Введіть ПІБ дорослого...">
                     </div>
                     <div class="search-field">
-                        <label><i class="fas fa-child"></i> Пошук за ПІБ дитини</label>
-                        <input type="text" id="childNameSearch" placeholder="Введіть ПІБ дитини...">
+                        <label><i class="fas fa-phone-alt"></i> Пошук за телефоном</label>
+                        <input type="text" id="phoneSearch" placeholder="Введіть номер телефону...">
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-child"></i> Пошук за прізвищем дитини</label>
+                        <input type="text" id="childSurnameSearch" placeholder="Введіть прізвище дитини...">
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-user"></i> Пошук за ім'ям дитини</label>
+                        <input type="text" id="childNameSearch" placeholder="Введіть ім'я дитини...">
                     </div>
                     <div class="search-field">
                         <label><i class="fas fa-credit-card"></i> Пошук за карткою</label>
@@ -844,7 +856,9 @@ async function loadData(showLoading = true) {
 
 function applyFilters() {
     const parentFilter = document.getElementById('parentSearch').value.toLowerCase().trim();
-    const childFilter = document.getElementById('childNameSearch').value.toLowerCase().trim();
+    const phoneFilter = document.getElementById('phoneSearch').value.toLowerCase().trim();
+    const childSurnameFilter = document.getElementById('childSurnameSearch').value.toLowerCase().trim();
+    const childNameFilter = document.getElementById('childNameSearch').value.toLowerCase().trim();
     const cardFilter = document.getElementById('cardSearch').value.toLowerCase().trim();
     const birthdaySearch = document.getElementById('birthdaySearch').value;
     
@@ -856,11 +870,22 @@ function applyFilters() {
         );
     }
     
-    if (childFilter) {
-        filtered = filtered.filter(item => {
-            const fullChildName = `${item.childSurname || ''} ${item.childName || ''}`.toLowerCase();
-            return fullChildName.includes(childFilter);
-        });
+    if (phoneFilter) {
+        filtered = filtered.filter(item => 
+            item.phone && item.phone.toLowerCase().includes(phoneFilter)
+        );
+    }
+    
+    if (childSurnameFilter) {
+        filtered = filtered.filter(item => 
+            item.childSurname && item.childSurname.toLowerCase().includes(childSurnameFilter)
+        );
+    }
+    
+    if (childNameFilter) {
+        filtered = filtered.filter(item => 
+            item.childName && item.childName.toLowerCase().includes(childNameFilter)
+        );
     }
     
     if (cardFilter) {
@@ -1099,6 +1124,8 @@ function createCell(content, className = '') {
 
 function clearSearch() {
     document.getElementById('parentSearch').value = '';
+    document.getElementById('phoneSearch').value = '';
+    document.getElementById('childSurnameSearch').value = '';
     document.getElementById('childNameSearch').value = '';
     document.getElementById('cardSearch').value = '';
     document.getElementById('birthdaySearch').value = '';
@@ -1131,6 +1158,8 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('clearSearchBtnHeader').addEventListener('click', clearSearch);
     
     document.getElementById('parentSearch').addEventListener('keypress', handleKeyPress);
+    document.getElementById('phoneSearch').addEventListener('keypress', handleKeyPress);
+    document.getElementById('childSurnameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('childNameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('cardSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('birthdaySearch').addEventListener('change', applyFilters);
