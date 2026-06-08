@@ -40,9 +40,9 @@ body {
     background: var(--white);
     border-radius: 0;
     padding: 0;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     border: none;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .header-row {
@@ -57,9 +57,9 @@ body {
 
 .banner-area {
     flex: 1;
-    min-width: 200px;
+    min-width: 180px;
     height: auto;
-    min-height: 120px;
+    min-height: 70px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
@@ -76,30 +76,9 @@ body {
     object-fit: cover;
 }
 
-.banner-placeholder {
-    color: rgba(255,255,255,0.9);
-    font-size: 16px;
-    text-align: center;
-    padding: 20px;
-    font-weight: 500;
-}
-
-.banner-placeholder i {
-    font-size: 32px;
-    margin-bottom: 10px;
-    display: block;
-}
-
-.banner-link {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-}
-
 .header-buttons {
     display: flex;
-    gap: 4px;
+    gap: 2px;
     align-items: stretch;
     flex-wrap: wrap;
     padding: 0;
@@ -107,21 +86,18 @@ body {
 }
 
 .search-btn, .clear-btn, .refresh-btn, .add-btn {
-    padding: 0 24px;
+    padding: 0 20px;
     border-radius: 0;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     transition: all 0.2s;
     height: 100%;
-    min-height: 120px;
+    min-height: 70px;
     margin: 0;
-}
-
-.search-btn, .clear-btn, .refresh-btn, .add-btn {
     background: #0174fd;
     color: white;
     border: none;
@@ -137,14 +113,14 @@ body {
 }
 
 .search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .controls {
     background: var(--white);
     border-radius: 0;
-    padding: 20px 24px;
-    margin: 0 0 24px 0;
+    padding: 12px 16px;
+    margin: 0 0 12px 0;
     border: 1px solid var(--border);
     border-left: none;
     border-right: none;
@@ -152,7 +128,7 @@ body {
 
 .controls-row {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
@@ -160,20 +136,14 @@ body {
 
 .search-section {
     flex: 2;
-    min-width: 300px;
-}
-
-.action-section {
-    display: flex;
-    gap: 12px;
-    align-items: flex-end;
+    min-width: 280px;
 }
 
 .search-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-bottom: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 0;
 }
 
 .search-field {
@@ -183,24 +153,25 @@ body {
 
 .search-field label {
     display: block;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--dark);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .search-field label i {
-    margin-right: 6px;
+    margin-right: 4px;
+    font-size: 11px;
 }
 
 .search-field input,
 .search-field select {
     width: 100%;
-    padding: 12px 16px;
-    border-radius: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
     border: 1px solid var(--border);
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
     background: #f9fafb;
     transition: all 0.2s;
 }
@@ -210,7 +181,7 @@ body {
     outline: none;
     border-color: #0174fd;
     background: var(--white);
-    box-shadow: 0 0 0 3px rgba(1,116,253,0.1);
+    box-shadow: 0 0 0 2px rgba(1,116,253,0.1);
 }
 
 .table-container {
@@ -220,25 +191,25 @@ body {
     border-left: none;
     border-right: none;
     overflow-x: auto;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     padding: 0;
-    margin: 0 0 24px 0;
+    margin: 0 0 12px 0;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
     table-layout: fixed;
 }
 
 .data-table th {
     background: #f8fafc;
-    padding: 16px 12px;
+    padding: 10px 8px;
     text-align: center;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 13px;
     color: var(--dark);
     border-bottom: 1px solid var(--border);
     position: sticky;
@@ -246,12 +217,12 @@ body {
 }
 
 .data-table td {
-    padding: 14px 12px;
+    padding: 8px 8px;
     border-bottom: 1px solid #f0f2f5;
     color: #374151;
     text-align: center;
-    font-weight: 600;
-    font-size: 15px;
+    font-weight: 500;
+    font-size: 13px;
 }
 
 .data-table tr:hover {
@@ -264,12 +235,12 @@ body {
 
 .data-table th:first-child,
 .data-table td:first-child {
-    padding-left: 24px;
+    padding-left: 12px;
 }
 
 .data-table th:last-child,
 .data-table td:last-child {
-    padding-right: 24px;
+    padding-right: 12px;
 }
 
 .balance-positive {
@@ -290,10 +261,10 @@ body {
 .visits-badge {
     display: inline-block;
     color: #374151;
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 13px;
     text-align: center;
-    min-width: 50px;
+    min-width: 40px;
     background: transparent;
     padding: 0;
     border-radius: 0;
@@ -301,22 +272,22 @@ body {
 
 .action-buttons {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
     justify-content: center;
 }
 
 .btn-operation {
-    padding: 6px 12px;
+    padding: 4px 10px;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 600;
     transition: all 0.2s;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .btn-operation:disabled {
@@ -333,7 +304,7 @@ body {
 
 .btn-deposit:hover:not(:disabled) {
     background: #0165cc;
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 
 .btn-withdraw {
@@ -344,13 +315,13 @@ body {
 
 .btn-withdraw:hover:not(:disabled) {
     background: #c01080;
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 
 .btn-spinner {
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border: 2px solid currentColor;
     border-top-color: transparent;
     border-radius: 50%;
@@ -363,8 +334,8 @@ body {
 
 .loading-spinner {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border: 3px solid #e2e8f0;
     border-radius: 50%;
     border-top-color: var(--dark);
@@ -373,38 +344,38 @@ body {
 
 .empty-state {
     text-align: center;
-    padding: 60px 20px;
+    padding: 40px 20px;
     color: #6b7280;
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .empty-state i {
-    font-size: 48px;
-    margin-bottom: 16px;
+    font-size: 40px;
+    margin-bottom: 12px;
     opacity: 0.5;
 }
 
 .empty-state p {
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .empty-state button {
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 13px;
 }
 
 .toast {
     position: fixed;
-    bottom: 24px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--dark);
     color: white;
-    padding: 12px 24px;
+    padding: 10px 20px;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
     z-index: 1000;
     animation: fadeUp 0.25s ease;
@@ -421,8 +392,8 @@ body {
 
 .date-cell {
     white-space: nowrap;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     color: #6b7280;
 }
 
@@ -445,9 +416,9 @@ body {
 
 .modal-content {
     background: var(--white);
-    border-radius: 16px;
+    border-radius: 12px;
     width: 90%;
-    max-width: 500px;
+    max-width: 450px;
     max-height: 90vh;
     overflow-y: auto;
     animation: modalSlide 0.2s ease;
@@ -459,7 +430,7 @@ body {
 }
 
 .modal-header {
-    padding: 20px 24px;
+    padding: 14px 20px;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -467,15 +438,15 @@ body {
 }
 
 .modal-header h2 {
-    font-size: 22px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 700;
     color: var(--dark);
 }
 
 .modal-close {
     background: none;
     border: none;
-    font-size: 28px;
+    font-size: 24px;
     cursor: pointer;
     color: #9ca3af;
 }
@@ -485,61 +456,62 @@ body {
 }
 
 .modal-body {
-    padding: 24px;
+    padding: 16px 20px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .form-group label {
     display: block;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--dark);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .form-group label i {
-    width: 20px;
+    width: 18px;
+    font-size: 12px;
     color: #0174fd;
 }
 
 .form-group input {
     width: 100%;
-    padding: 12px 16px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
     border: 1px solid var(--border);
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
     transition: all 0.2s;
 }
 
 .form-group input:focus {
     outline: none;
     border-color: #0174fd;
-    box-shadow: 0 0 0 3px rgba(1,116,253,0.1);
+    box-shadow: 0 0 0 2px rgba(1,116,253,0.1);
 }
 
 .form-group input:disabled {
-    font-weight: 600;
+    font-weight: 500;
     background: #f3f4f6;
     color: #4b5563;
 }
 
 .modal-footer {
-    padding: 16px 24px;
+    padding: 12px 20px;
     border-top: 1px solid var(--border);
     display: flex;
-    gap: 12px;
+    gap: 10px;
     justify-content: flex-end;
 }
 
 .modal-footer button {
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -561,7 +533,7 @@ body {
     color: white;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .btn-submit:hover:not(:disabled) {
@@ -569,45 +541,47 @@ body {
 }
 
 @media (max-width: 768px) {
-    body { padding: 0; }
-    .controls { margin: 0 0 20px 0; padding: 15px; }
-    .table-container { margin: 0 0 20px 0; }
-    .data-table th, .data-table td { padding: 10px 8px; font-size: 14px; font-weight: 600; }
-    .data-table th { font-size: 14px; font-weight: 700; }
-    .search-field label { font-size: 14px; }
-    .search-field input, .search-field select { font-size: 15px; }
+    .controls { padding: 10px 12px; margin-bottom: 10px; }
+    .table-container { margin-bottom: 10px; }
+    .data-table th, .data-table td { padding: 6px 6px; font-size: 11px; }
+    .data-table th { font-size: 11px; }
+    .search-field label { font-size: 11px; }
+    .search-field input, .search-field select { font-size: 12px; padding: 6px 8px; }
     .data-table th:first-child,
     .data-table td:first-child {
-        padding-left: 16px;
+        padding-left: 8px;
     }
     .data-table th:last-child,
     .data-table td:last-child {
-        padding-right: 16px;
+        padding-right: 8px;
     }
-    .search-grid { grid-template-columns: 1fr; }
+    .search-grid { gap: 8px; }
     .header-row { flex-direction: column; align-items: stretch; }
-    .banner-area { min-height: 80px; }
+    .banner-area { min-height: 50px; }
     .header-buttons { 
         justify-content: center; 
         padding: 0;
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 4px;
+        gap: 2px;
     }
     .search-btn, .clear-btn, .refresh-btn, .add-btn {
-        min-height: 56px;
-        padding: 0 16px;
+        min-height: 44px;
+        padding: 0 12px;
         flex: 1;
         justify-content: center;
-        font-size: 14px;
+        font-size: 12px;
     }
-    .action-buttons { flex-direction: column; align-items: center; }
+    .action-buttons { flex-direction: row; gap: 4px; }
     .controls-row { flex-direction: column; }
     .action-section { width: 100%; }
-    .modal-header h2 { font-size: 20px; }
-    .form-group label { font-size: 14px; }
-    .form-group input { font-size: 15px; }
-    .btn-operation { font-size: 12px; font-weight: 700; }
+    .modal-header h2 { font-size: 16px; }
+    .modal-header { padding: 12px 16px; }
+    .modal-body { padding: 12px 16px; }
+    .form-group { margin-bottom: 10px; }
+    .form-group label { font-size: 11px; }
+    .form-group input { font-size: 13px; padding: 6px 10px; }
+    .btn-operation { font-size: 10px; padding: 3px 8px; }
 }
 </style>
 </head>
@@ -630,7 +604,7 @@ body {
                     <i class="fas fa-sync-alt"></i> Оновити
                 </button>
                 <button class="add-btn" onclick="openAddModal()">
-                    <i class="fas fa-plus-circle"></i> Додати клієнта
+                    <i class="fas fa-plus-circle"></i> Додати
                 </button>
             </div>
         </div>
@@ -641,28 +615,28 @@ body {
             <div class="search-section">
                 <div class="search-grid">
                     <div class="search-field">
-                        <label><i class="fas fa-user"></i> Пошук за ПІБ дорослого</label>
-                        <input type="text" id="parentSearch" placeholder="Введіть ПІБ дорослого...">
+                        <label><i class="fas fa-user"></i> ПІБ дорослого</label>
+                        <input type="text" id="parentSearch" placeholder="Пошук...">
                     </div>
                     <div class="search-field">
-                        <label><i class="fas fa-phone-alt"></i> Пошук за телефоном</label>
-                        <input type="text" id="phoneSearch" placeholder="Введіть номер телефону...">
+                        <label><i class="fas fa-phone-alt"></i> Телефон</label>
+                        <input type="text" id="phoneSearch" placeholder="Пошук...">
                     </div>
                     <div class="search-field">
-                        <label><i class="fas fa-child"></i> Пошук за прізвищем дитини</label>
-                        <input type="text" id="childSurnameSearch" placeholder="Введіть прізвище дитини...">
+                        <label><i class="fas fa-child"></i> Прізвище дитини</label>
+                        <input type="text" id="childSurnameSearch" placeholder="Пошук...">
                     </div>
                     <div class="search-field">
-                        <label><i class="fas fa-user"></i> Пошук за ім'ям дитини</label>
-                        <input type="text" id="childNameSearch" placeholder="Введіть ім'я дитини...">
+                        <label><i class="fas fa-user"></i> Ім'я дитини</label>
+                        <input type="text" id="childNameSearch" placeholder="Пошук...">
                     </div>
                     <div class="search-field">
-                        <label><i class="fas fa-credit-card"></i> Пошук за карткою</label>
-                        <input type="text" id="cardSearch" placeholder="Введіть номер картки...">
+                        <label><i class="fas fa-credit-card"></i> Номер картки</label>
+                        <input type="text" id="cardSearch" placeholder="Пошук...">
                     </div>
                     <div class="search-field">
-                        <label><i class="fas fa-calendar-alt"></i> Пошук за датою народження</label>
-                        <input type="date" id="birthdaySearch" placeholder="Виберіть дату">
+                        <label><i class="fas fa-calendar-alt"></i> Дата народження</label>
+                        <input type="date" id="birthdaySearch">
                     </div>
                 </div>
             </div>
@@ -682,13 +656,13 @@ body {
 <div id="addModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2><i class="fas fa-user-plus"></i> Додавання нового клієнта</h2>
+            <h2><i class="fas fa-user-plus"></i> Додати клієнта</h2>
             <button class="modal-close" onclick="closeAddModal()">&times;</button>
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <label><i class="fas fa-user-tag"></i> ПІБ дорослого (Родитель) *</label>
-                <input type="text" id="addParent" placeholder="Введіть ПІБ мами/тата">
+                <label><i class="fas fa-user-tag"></i> ПІБ дорослого *</label>
+                <input type="text" id="addParent" placeholder="ПІБ мами/тата">
             </div>
             <div class="form-group">
                 <label><i class="fas fa-phone-alt"></i> Мобільний телефон *</label>
@@ -708,7 +682,7 @@ body {
             </div>
             <div class="form-group">
                 <label><i class="fas fa-credit-card"></i> Номер картки *</label>
-                <input type="text" id="addCardNumber" placeholder="Введіть номер картки">
+                <input type="text" id="addCardNumber" placeholder="Номер картки">
             </div>
             <div class="form-group">
                 <label><i class="fas fa-money-bill-wave"></i> Початковий баланс</label>
@@ -716,7 +690,7 @@ body {
             </div>
             <div class="form-group">
                 <label><i class="fas fa-chart-line"></i> Відвідування</label>
-                <input type="text" value="1 (встановлюється автоматично)" disabled style="background:#f3f4f6; color:#4b5563; font-weight:600;">
+                <input type="text" value="1 (авто)" disabled style="background:#f3f4f6; font-size:12px;">
             </div>
         </div>
         <div class="modal-footer">
@@ -844,8 +818,8 @@ async function loadData(showLoading = true) {
         if (container) {
             container.innerHTML = `<div class="empty-state">
                 <i class="fas fa-exclamation-triangle"></i>
-                <p>Помилка завантаження: ${err.message}</p>
-                <button onclick="loadData(true)" style="margin-top:16px;padding:8px 20px;background:#0174fd;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">Повторити</button>
+                <p>Помилка: ${err.message}</p>
+                <button onclick="loadData(true)" style="margin-top:12px;padding:6px 16px;background:#0174fd;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:600;">Повторити</button>
             </div>`;
         }
         showToast(`Помилка: ${err.message}`, true);
@@ -909,7 +883,7 @@ function applyFilters() {
 }
 
 async function handleDeposit(row, parentName, childFullName, button) {
-    const amount = prompt(`Введіть суму поповнення для ${parentName} (дитина: ${childFullName}):\n(буде додано бонус 5%)`, "");
+    const amount = prompt(`Сума поповнення для ${parentName}\n(дитина: ${childFullName}):\nБонус +5%`, "");
     if (amount === null) return;
     
     let numAmount = parseFloat(amount);
@@ -923,13 +897,13 @@ async function handleDeposit(row, parentName, childFullName, button) {
     
     const originalHtml = button.innerHTML;
     button.disabled = true;
-    button.innerHTML = '<span class="btn-spinner"></span> Завантаження...';
+    button.innerHTML = '<span class="btn-spinner"></span>';
     
     try {
         const result = await callScript('deposit', { row: row, amount: totalAmount });
         if (result.error) throw new Error(result.error);
         
-        showToast(`✅ ${parentName}: Поповнення на ${numAmount.toFixed(2)} + бонус 5% (${bonus.toFixed(2)}) = ${totalAmount.toFixed(2)}`);
+        showToast(`✅ ${parentName}: +${numAmount.toFixed(2)} + бонус ${bonus.toFixed(2)} = ${totalAmount.toFixed(2)}`);
         await loadData(false);
     } catch (err) {
         showToast(`Помилка: ${err.message}`, true);
@@ -940,7 +914,7 @@ async function handleDeposit(row, parentName, childFullName, button) {
 }
 
 async function handleWithdraw(row, parentName, childFullName, button) {
-    const amount = prompt(`Введіть суму зняття для ${parentName} (дитина: ${childFullName}):`, "");
+    const amount = prompt(`Сума зняття для ${parentName}\n(дитина: ${childFullName}):`, "");
     if (amount === null) return;
     
     const numAmount = parseFloat(amount);
@@ -951,7 +925,7 @@ async function handleWithdraw(row, parentName, childFullName, button) {
     
     const originalHtml = button.innerHTML;
     button.disabled = true;
-    button.innerHTML = '<span class="btn-spinner"></span> Завантаження...';
+    button.innerHTML = '<span class="btn-spinner"></span>';
     
     try {
         const result = await callScript('withdraw', { row: row, amount: numAmount });
@@ -980,7 +954,7 @@ async function addNewUser() {
     const visits = 1;
     
     if (!parent) { showToast("Введіть ПІБ дорослого", true); return; }
-    if (!phone) { showToast("Введіть мобільний телефон", true); return; }
+    if (!phone) { showToast("Введіть телефон", true); return; }
     if (!childSurname) { showToast("Введіть прізвище дитини", true); return; }
     if (!childName) { showToast("Введіть ім'я дитини", true); return; }
     if (!cardNumber) { showToast("Введіть номер картки", true); return; }
@@ -989,7 +963,7 @@ async function addNewUser() {
     const originalHtml = submitBtn.innerHTML;
     
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="btn-spinner"></span> Додавання...';
+    submitBtn.innerHTML = '<span class="btn-spinner"></span>';
     
     try {
         const result = await callScript('addUser', { 
@@ -1005,7 +979,7 @@ async function addNewUser() {
         
         if (result.error) throw new Error(result.error);
         
-        showToast(`✅ Клієнт ${parent} (дитина: ${childSurname} ${childName}) успішно доданий`);
+        showToast(`✅ Клієнта додано`);
         closeAddModal();
         await loadData(true);
         
@@ -1038,7 +1012,7 @@ function renderTable(data) {
     if (!container) return;
     
     if (!data.length) {
-        container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Немає даних для відображення</p></div>';
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Немає даних</p></div>';
         return;
     }
     
@@ -1047,7 +1021,7 @@ function renderTable(data) {
     
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Дата народження', 'Номер картки', 'Відвідування', 'Баланс', 'Дії'];
+    const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Дата народж.', 'Номер картки', 'Відв.', 'Баланс', 'Дії'];
     headers.forEach(text => {
         const th = document.createElement('th');
         th.textContent = text;
@@ -1085,7 +1059,7 @@ function renderTable(data) {
         
         const depositBtn = document.createElement('button');
         depositBtn.className = 'btn-operation btn-deposit';
-        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Поповнення (+5%)';
+        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> +5%';
         depositBtn.onclick = (e) => {
             e.preventDefault();
             handleDeposit(item.row, item.parent, childFullName, depositBtn);
@@ -1093,7 +1067,7 @@ function renderTable(data) {
         
         const withdrawBtn = document.createElement('button');
         withdrawBtn.className = 'btn-operation btn-withdraw';
-        withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Зняття';
+        withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Зняти';
         withdrawBtn.onclick = (e) => {
             e.preventDefault();
             handleWithdraw(item.row, item.parent, childFullName, withdrawBtn);
@@ -1141,7 +1115,7 @@ function showToast(msg, isError = false) {
     toast.className = 'toast' + (isError ? ' error' : '');
     toast.innerHTML = msg;
     document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+    setTimeout(() => toast.remove(), 2500);
 }
 
 function handleKeyPress(e) {
