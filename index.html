@@ -31,8 +31,8 @@ body {
 }
 
 .wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     padding: 0;
 }
 
@@ -40,7 +40,7 @@ body {
     background: var(--white);
     border-radius: 0;
     padding: 0;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     border: none;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
@@ -57,9 +57,9 @@ body {
 
 .banner-area {
     flex: 1;
-    min-width: 180px;
+    min-width: 160px;
     height: auto;
-    min-height: 70px;
+    min-height: 60px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
@@ -78,7 +78,7 @@ body {
 
 .header-buttons {
     display: flex;
-    gap: 2px;
+    gap: 1px;
     align-items: stretch;
     flex-wrap: wrap;
     padding: 0;
@@ -86,17 +86,17 @@ body {
 }
 
 .search-btn, .clear-btn, .refresh-btn, .add-btn {
-    padding: 0 20px;
+    padding: 0 16px;
     border-radius: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.2s;
     height: 100%;
-    min-height: 70px;
+    min-height: 60px;
     margin: 0;
     background: #0174fd;
     color: white;
@@ -113,14 +113,14 @@ body {
 }
 
 .search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .controls {
     background: var(--white);
     border-radius: 0;
-    padding: 12px 16px;
-    margin: 0 0 12px 0;
+    padding: 8px 10px;
+    margin: 0 0 8px 0;
     border: 1px solid var(--border);
     border-left: none;
     border-right: none;
@@ -128,7 +128,7 @@ body {
 
 .controls-row {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
@@ -136,13 +136,13 @@ body {
 
 .search-section {
     flex: 2;
-    min-width: 280px;
+    min-width: 260px;
 }
 
 .search-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
     margin-bottom: 0;
 }
 
@@ -153,24 +153,24 @@ body {
 
 .search-field label {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--dark);
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .search-field label i {
-    margin-right: 4px;
-    font-size: 11px;
+    margin-right: 3px;
+    font-size: 10px;
 }
 
 .search-field input,
 .search-field select {
     width: 100%;
-    padding: 8px 10px;
-    border-radius: 6px;
+    padding: 6px 8px;
+    border-radius: 5px;
     border: 1px solid var(--border);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     background: #f9fafb;
     transition: all 0.2s;
@@ -193,36 +193,37 @@ body {
     overflow-x: auto;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     padding: 0;
-    margin: 0 0 12px 0;
+    margin: 0;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 500;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 .data-table th {
     background: #f8fafc;
-    padding: 10px 8px;
+    padding: 12px 10px;
     text-align: center;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 15px;
     color: var(--dark);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
+    white-space: nowrap;
 }
 
 .data-table td {
-    padding: 8px 8px;
+    padding: 10px 10px;
     border-bottom: 1px solid #f0f2f5;
     color: #374151;
     text-align: center;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .data-table tr:hover {
@@ -235,12 +236,12 @@ body {
 
 .data-table th:first-child,
 .data-table td:first-child {
-    padding-left: 12px;
+    padding-left: 10px;
 }
 
 .data-table th:last-child,
 .data-table td:last-child {
-    padding-right: 12px;
+    padding-right: 10px;
 }
 
 .balance-positive {
@@ -261,8 +262,8 @@ body {
 .visits-badge {
     display: inline-block;
     color: #374151;
-    font-weight: 600;
-    font-size: 13px;
+    font-weight: 700;
+    font-size: 15px;
     text-align: center;
     min-width: 40px;
     background: transparent;
@@ -278,16 +279,16 @@ body {
 }
 
 .btn-operation {
-    padding: 4px 10px;
+    padding: 5px 12px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     transition: all 0.2s;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
 }
 
 .btn-operation:disabled {
@@ -347,7 +348,7 @@ body {
     padding: 40px 20px;
     color: #6b7280;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .empty-state i {
@@ -358,7 +359,7 @@ body {
 
 .empty-state p {
     font-weight: 500;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .empty-state button {
@@ -392,7 +393,7 @@ body {
 
 .date-cell {
     white-space: nowrap;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     color: #6b7280;
 }
@@ -465,7 +466,7 @@ body {
 
 .form-group label {
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--dark);
     margin-bottom: 4px;
@@ -540,37 +541,38 @@ body {
     opacity: 0.85;
 }
 
+/* Адаптив для мобільних - зберігаємо великі шрифти */
 @media (max-width: 768px) {
-    .controls { padding: 10px 12px; margin-bottom: 10px; }
-    .table-container { margin-bottom: 10px; }
-    .data-table th, .data-table td { padding: 6px 6px; font-size: 11px; }
-    .data-table th { font-size: 11px; }
-    .search-field label { font-size: 11px; }
-    .search-field input, .search-field select { font-size: 12px; padding: 6px 8px; }
+    .controls { padding: 6px 8px; margin-bottom: 6px; }
+    .table-container { margin: 0; }
+    .data-table th, .data-table td { padding: 8px 6px; font-size: 13px; }
+    .data-table th { font-size: 13px; }
+    .search-field label { font-size: 10px; }
+    .search-field input, .search-field select { font-size: 12px; padding: 5px 6px; }
     .data-table th:first-child,
     .data-table td:first-child {
-        padding-left: 8px;
+        padding-left: 6px;
     }
     .data-table th:last-child,
     .data-table td:last-child {
-        padding-right: 8px;
+        padding-right: 6px;
     }
-    .search-grid { gap: 8px; }
+    .search-grid { gap: 6px; }
     .header-row { flex-direction: column; align-items: stretch; }
-    .banner-area { min-height: 50px; }
+    .banner-area { min-height: 45px; }
     .header-buttons { 
         justify-content: center; 
         padding: 0;
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 2px;
+        gap: 1px;
     }
     .search-btn, .clear-btn, .refresh-btn, .add-btn {
-        min-height: 44px;
-        padding: 0 12px;
+        min-height: 45px;
+        padding: 0 10px;
         flex: 1;
         justify-content: center;
-        font-size: 12px;
+        font-size: 11px;
     }
     .action-buttons { flex-direction: row; gap: 4px; }
     .controls-row { flex-direction: column; }
@@ -579,9 +581,12 @@ body {
     .modal-header { padding: 12px 16px; }
     .modal-body { padding: 12px 16px; }
     .form-group { margin-bottom: 10px; }
-    .form-group label { font-size: 11px; }
+    .form-group label { font-size: 12px; }
     .form-group input { font-size: 13px; padding: 6px 10px; }
-    .btn-operation { font-size: 10px; padding: 3px 8px; }
+    .btn-operation { font-size: 10px; padding: 4px 8px; }
+    .visits-badge { font-size: 13px; }
+    .date-cell { font-size: 12px; }
+    .balance-positive, .balance-negative, .balance-zero { font-size: 13px; }
 }
 </style>
 </head>
