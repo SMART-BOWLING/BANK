@@ -15,8 +15,7 @@
     --success: #10b981;
     --warning: #f59e0b;
     --primary: #3b82f6;
-    --side-padding: 70px; /* Збільшені бічні відступи для ПК */
-    
+    --side-padding: 70px;
 }
 
 * {
@@ -35,13 +34,12 @@ body {
 .wrapper {
     max-width: 100%;
     margin: 0;
-    padding: 0 var(--side-padding); /* Бічні відступи */
+    padding: 0 var(--side-padding);
 }
 
 .header {
     background: var(--white);
     border-radius: 12px;
-    padding: 0;
     margin-bottom: 8px;
     border: none;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -58,11 +56,12 @@ body {
     border-bottom: 1px solid var(--border);
 }
 
+/* Банер ліворуч - займає все вільне місце */
 .banner-area {
     flex: 1;
-    min-width: 160px;
+    min-width: 200px;
     height: auto;
-    min-height: 60px;
+    min-height: 70px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
@@ -79,35 +78,54 @@ body {
     object-fit: cover;
 }
 
+/* Квадратні кнопки праворуч - без закруглень, на всю висоту */
 .header-buttons {
     display: flex;
-    gap: 1px;
+    gap: 0; /* Без проміжків між кнопками */
     align-items: stretch;
-    flex-wrap: wrap;
     padding: 0;
     background: var(--white);
 }
 
 .search-btn, .clear-btn, .refresh-btn, .add-btn {
-    padding: 0 16px;
+    /* Квадратна форма - однакова ширина і висота */
+    width: 80px;
+    height: 100%; /* На всю висоту батьківського контейнера */
+    min-width: 80px;
+    
+    /* Центрування іконки та тексту */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    
+    /* Стилізація - БЕЗ закруглень */
     border-radius: 0;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
     transition: all 0.2s;
-    height: 100%;
-    min-height: 60px;
-    margin: 0;
     background: #0174fd;
     color: white;
     border: none;
+    border-left: 1px solid rgba(255,255,255,0.2); /* Розділювач між кнопками */
+}
+
+/* Перша кнопка без лівого бордера */
+.search-btn {
+    border-left: none;
+}
+
+/* Іконки в квадратних кнопках - більші */
+.search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
+    font-size: 22px;
+    margin-bottom: 2px;
 }
 
 .search-btn:hover, .clear-btn:hover, .refresh-btn:hover, .add-btn:hover {
     opacity: 0.85;
+    background: #0165cc;
 }
 
 .add-btn:disabled {
@@ -115,10 +133,7 @@ body {
     cursor: not-allowed;
 }
 
-.search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
-    font-size: 14px;
-}
-
+/* Інші стилі залишаються без змін */
 .controls {
     background: var(--white);
     border-radius: 12px;
@@ -231,16 +246,6 @@ body {
 
 .data-table tr:last-child td {
     border-bottom: none;
-}
-
-.data-table th:first-child,
-.data-table td:first-child {
-    padding-left: 10px;
-}
-
-.data-table th:last-child,
-.data-table td:last-child {
-    padding-right: 10px;
 }
 
 .balance-positive {
@@ -543,8 +548,29 @@ body {
 /* Адаптив для мобільних */
 @media (max-width: 768px) {
     :root {
-        --side-padding: 16px; /* Зменшені відступи на мобільних */
+        --side-padding: 16px;
     }
+    
+    .header-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .banner-area {
+        min-height: 50px;
+    }
+    
+    /* На мобільних кнопки трохи менші, але все ще квадратні */
+    .search-btn, .clear-btn, .refresh-btn, .add-btn {
+        width: 65px;
+        min-width: 65px;
+        font-size: 10px;
+    }
+    
+    .search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
+        font-size: 18px;
+    }
+    
     .controls { padding: 6px 8px; margin-bottom: 6px; }
     .table-container { margin: 0 0 6px 0; }
     .data-table th, .data-table td { padding: 8px 6px; font-size: 13px; }
@@ -560,23 +586,6 @@ body {
         padding-right: 6px;
     }
     .search-grid { gap: 6px; }
-    .header-row { flex-direction: column; align-items: stretch; }
-    .banner-area { min-height: 45px; }
-    .header-buttons { 
-        justify-content: center; 
-        padding: 0;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 1px;
-    }
-    .search-btn, .clear-btn, .refresh-btn, .add-btn {
-        min-height: 45px;
-        padding: 0 10px;
-        flex: 1;
-        justify-content: center;
-        font-size: 11px;
-    }
-    .action-buttons { flex-direction: row; gap: 4px; }
     .controls-row { flex-direction: column; }
     .action-section { width: 100%; }
     .modal-header h2 { font-size: 16px; }
@@ -594,7 +603,17 @@ body {
 /* Для маленьких телефонів */
 @media (max-width: 480px) {
     :root {
-        --side-padding: 12px; /* Мінімальні відступи */
+        --side-padding: 12px;
+    }
+    
+    .search-btn, .clear-btn, .refresh-btn, .add-btn {
+        width: 55px;
+        min-width: 55px;
+        font-size: 9px;
+    }
+    
+    .search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
+        font-size: 16px;
     }
 }
 </style>
@@ -604,21 +623,21 @@ body {
     <div class="header">
         <div class="header-row">
             <div class="banner-area" id="bannerContainer">
-                <img src="https://res.cloudinary.com/dplmdnxvk/image/upload/v1780927464/fpolljo5hmcdsxhmxc9v.png" alt="Банер">
+                <img src="https://res.cloudinary.com/dplmdnxvk/image/upload/v1780927084/txdgapkackn6pfi5oyxk.png" alt="Банер">
             </div>
             
             <div class="header-buttons">
                 <button id="searchBtnHeader" class="search-btn">
-                    <i class="fas fa-search"></i> Знайти
+                    <i class="fas fa-search"></i> <span>Знайти</span>
                 </button>
                 <button id="clearSearchBtnHeader" class="clear-btn">
-                    <i class="fas fa-eraser"></i> Очистити
+                    <i class="fas fa-eraser"></i> <span>Очистити</span>
                 </button>
                 <button class="refresh-btn" onclick="loadData(true)">
-                    <i class="fas fa-sync-alt"></i> Оновити
+                    <i class="fas fa-sync-alt"></i> <span>Оновити</span>
                 </button>
                 <button class="add-btn" onclick="openAddModal()">
-                    <i class="fas fa-plus-circle"></i> Додати
+                    <i class="fas fa-plus-circle"></i> <span>Додати</span>
                 </button>
             </div>
         </div>
