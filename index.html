@@ -37,12 +37,12 @@ body {
     padding: 0 var(--side-padding);
 }
 
+/* ВСІ ЗАКРУГЛЕННЯ ПРИБРАНО — скрізь border-radius: 0 */
 .header {
     background: var(--white);
-    border-radius: 12px;
+    border-radius: 0;
     margin-bottom: 8px;
-    border: none;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
     overflow: hidden;
 }
 
@@ -56,12 +56,12 @@ body {
     border-bottom: 1px solid var(--border);
 }
 
-/* Банер ліворуч - займає все вільне місце */
+/* Банер ліворуч */
 .banner-area {
     flex: 1;
     min-width: 200px;
     height: auto;
-    min-height: 70px;
+    min-height: 80px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
@@ -70,6 +70,7 @@ body {
     position: relative;
     margin: 0;
     padding: 0;
+    border-radius: 0;
 }
 
 .banner-area img {
@@ -78,29 +79,24 @@ body {
     object-fit: cover;
 }
 
-/* Квадратні кнопки праворуч - без закруглень, на всю висоту */
+/* Квадратні кнопки праворуч - без закруглень */
 .header-buttons {
     display: flex;
-    gap: 0; /* Без проміжків між кнопками */
+    gap: 0;
     align-items: stretch;
     padding: 0;
     background: var(--white);
 }
 
 .search-btn, .clear-btn, .refresh-btn, .add-btn {
-    /* Квадратна форма - однакова ширина і висота */
     width: 80px;
-    height: 100%; /* На всю висоту батьківського контейнера */
+    height: 100%;
     min-width: 80px;
-    
-    /* Центрування іконки та тексту */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    
-    /* Стилізація - БЕЗ закруглень */
     border-radius: 0;
     font-size: 12px;
     font-weight: 600;
@@ -109,15 +105,13 @@ body {
     background: #0174fd;
     color: white;
     border: none;
-    border-left: 1px solid rgba(255,255,255,0.2); /* Розділювач між кнопками */
+    border-left: 1px solid rgba(255,255,255,0.2);
 }
 
-/* Перша кнопка без лівого бордера */
 .search-btn {
     border-left: none;
 }
 
-/* Іконки в квадратних кнопках - більші */
 .search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
     font-size: 22px;
     margin-bottom: 2px;
@@ -133,11 +127,11 @@ body {
     cursor: not-allowed;
 }
 
-/* Інші стилі залишаються без змін */
+/* ===== ПІДКЛАДКА ПОШУКУ: збільшена по висоті, без закруглень ===== */
 .controls {
     background: var(--white);
-    border-radius: 12px;
-    padding: 8px 12px;
+    border-radius: 0;               /* прямі кути */
+    padding: 24px 20px;             /* збільшено вертикальний паддинг для більшої висоти */
     margin: 0 0 8px 0;
     border: 1px solid var(--border);
 }
@@ -155,10 +149,11 @@ body {
     min-width: 260px;
 }
 
+/* Сітка полів пошуку: поля стали компактнішими по ширині */
 .search-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
     margin-bottom: 0;
 }
 
@@ -167,26 +162,28 @@ body {
     flex-direction: column;
 }
 
+/* ЗБІЛЬШЕНІ ЗАГОЛОВКИ ТЕКСТУ (LABEL) */
 .search-field label {
     display: block;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 14px;      /* збільшено (було 11px) */
+    font-weight: 700;
     color: var(--dark);
-    margin-bottom: 3px;
+    margin-bottom: 6px;
 }
 
 .search-field label i {
-    margin-right: 3px;
-    font-size: 10px;
+    margin-right: 5px;
+    font-size: 13px;
 }
 
+/* ПОЛЯ ВВОДУ: трохи більша висота, але без закруглень */
 .search-field input,
 .search-field select {
     width: 100%;
-    padding: 6px 8px;
-    border-radius: 5px;
+    padding: 9px 10px;
+    border-radius: 0;            /* прямі кути */
     border: 1px solid var(--border);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     background: #f9fafb;
     transition: all 0.2s;
@@ -200,9 +197,10 @@ body {
     box-shadow: 0 0 0 2px rgba(1,116,253,0.1);
 }
 
+/* Таблиця та інші блоки без закруглень */
 .table-container {
     background: var(--white);
-    border-radius: 12px;
+    border-radius: 0;            /* прямі кути */
     border: 1px solid var(--border);
     overflow-x: auto;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -285,7 +283,7 @@ body {
 .btn-operation {
     padding: 5px 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 0;          /* прямі кути */
     cursor: pointer;
     font-size: 12px;
     font-weight: 600;
@@ -304,23 +302,19 @@ body {
 .btn-deposit {
     background: #017afe;
     color: white;
-    border: none;
 }
 
 .btn-deposit:hover:not(:disabled) {
     background: #0165cc;
-    transform: scale(1.01);
 }
 
 .btn-withdraw {
     background: #e41598;
     color: white;
-    border: none;
 }
 
 .btn-withdraw:hover:not(:disabled) {
     background: #c01080;
-    transform: scale(1.01);
 }
 
 .btn-spinner {
@@ -369,6 +363,12 @@ body {
 .empty-state button {
     font-weight: 600;
     font-size: 13px;
+    border-radius: 0;
+    padding: 6px 16px;
+    background: #0174fd;
+    border: none;
+    color: white;
+    cursor: pointer;
 }
 
 .toast {
@@ -379,7 +379,7 @@ body {
     background: var(--dark);
     color: white;
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 0;          /* прямі кути */
     font-size: 13px;
     font-weight: 600;
     z-index: 1000;
@@ -402,6 +402,7 @@ body {
     color: #6b7280;
 }
 
+/* Модальне вікно без закруглень */
 .modal {
     display: none;
     position: fixed;
@@ -421,7 +422,7 @@ body {
 
 .modal-content {
     background: var(--white);
-    border-radius: 12px;
+    border-radius: 0;          /* прямі кути */
     width: 90%;
     max-width: 450px;
     max-height: 90vh;
@@ -485,7 +486,7 @@ body {
 .form-group input {
     width: 100%;
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 0;          /* прямі кути */
     border: 1px solid var(--border);
     font-size: 14px;
     font-weight: 500;
@@ -514,11 +515,12 @@ body {
 
 .modal-footer button {
     padding: 8px 16px;
-    border-radius: 6px;
+    border-radius: 0;          /* прямі кути */
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    border: none;
 }
 
 .modal-footer button:disabled {
@@ -528,13 +530,15 @@ body {
 
 .btn-cancel {
     background: #e5e7eb;
-    border: none;
     color: var(--dark);
+}
+
+.btn-cancel:hover {
+    background: #d1d5db;
 }
 
 .btn-submit {
     background: #0174fd;
-    border: none;
     color: white;
     display: inline-flex;
     align-items: center;
@@ -542,7 +546,7 @@ body {
 }
 
 .btn-submit:hover:not(:disabled) {
-    opacity: 0.85;
+    background: #0160d4;
 }
 
 /* Адаптив для мобільних */
@@ -557,10 +561,9 @@ body {
     }
     
     .banner-area {
-        min-height: 50px;
+        min-height: 60px;
     }
     
-    /* На мобільних кнопки трохи менші, але все ще квадратні */
     .search-btn, .clear-btn, .refresh-btn, .add-btn {
         width: 65px;
         min-width: 65px;
@@ -571,36 +574,36 @@ body {
         font-size: 18px;
     }
     
-    .controls { padding: 6px 8px; margin-bottom: 6px; }
+    .controls {
+        padding: 18px 14px;
+    }
+    
+    .search-field label {
+        font-size: 13px;
+    }
+    
+    .search-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 10px;
+    }
+    
+    .search-field input,
+    .search-field select {
+        padding: 8px 8px;
+        font-size: 13px;
+    }
+    
+    .controls { margin-bottom: 6px; }
     .table-container { margin: 0 0 6px 0; }
     .data-table th, .data-table td { padding: 8px 6px; font-size: 13px; }
     .data-table th { font-size: 13px; }
-    .search-field label { font-size: 10px; }
-    .search-field input, .search-field select { font-size: 12px; padding: 5px 6px; }
-    .data-table th:first-child,
-    .data-table td:first-child {
-        padding-left: 6px;
-    }
-    .data-table th:last-child,
-    .data-table td:last-child {
-        padding-right: 6px;
-    }
-    .search-grid { gap: 6px; }
-    .controls-row { flex-direction: column; }
-    .action-section { width: 100%; }
-    .modal-header h2 { font-size: 16px; }
-    .modal-header { padding: 12px 16px; }
-    .modal-body { padding: 12px 16px; }
-    .form-group { margin-bottom: 10px; }
-    .form-group label { font-size: 12px; }
-    .form-group input { font-size: 13px; padding: 6px 10px; }
     .btn-operation { font-size: 10px; padding: 4px 8px; }
     .visits-badge { font-size: 13px; }
     .date-cell { font-size: 12px; }
     .balance-positive, .balance-negative, .balance-zero { font-size: 13px; }
+    .modal-content { border-radius: 0; }
 }
 
-/* Для маленьких телефонів */
 @media (max-width: 480px) {
     :root {
         --side-padding: 12px;
@@ -614,6 +617,19 @@ body {
     
     .search-btn i, .clear-btn i, .refresh-btn i, .add-btn i {
         font-size: 16px;
+    }
+    
+    .controls {
+        padding: 16px 12px;
+    }
+    
+    .search-field label {
+        font-size: 12px;
+    }
+    
+    .search-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 }
 </style>
@@ -643,6 +659,7 @@ body {
         </div>
     </div>
 
+    <!-- Підкладка пошуку: збільшена по висоті (padding 24px 20px), поля компактніші, заголовки збільшені, закруглень немає -->
     <div class="controls">
         <div class="controls-row">
             <div class="search-section">
@@ -723,7 +740,7 @@ body {
             </div>
             <div class="form-group">
                 <label><i class="fas fa-chart-line"></i> Відвідування</label>
-                <input type="text" value="1 (авто)" disabled style="background:#f3f4f6; font-size:12px;">
+                <input type="text" value="1 (авто)" disabled style="background:#f3f4f6;">
             </div>
         </div>
         <div class="modal-footer">
@@ -852,7 +869,7 @@ async function loadData(showLoading = true) {
             container.innerHTML = `<div class="empty-state">
                 <i class="fas fa-exclamation-triangle"></i>
                 <p>Помилка: ${err.message}</p>
-                <button onclick="loadData(true)" style="margin-top:12px;padding:6px 16px;background:#0174fd;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:600;">Повторити</button>
+                <button onclick="loadData(true)">Повторити</button>
             </div>`;
         }
         showToast(`Помилка: ${err.message}`, true);
@@ -872,43 +889,26 @@ function applyFilters() {
     let filtered = [...allData];
     
     if (parentFilter) {
-        filtered = filtered.filter(item => 
-            item.parent && item.parent.toLowerCase().includes(parentFilter)
-        );
+        filtered = filtered.filter(item => item.parent && item.parent.toLowerCase().includes(parentFilter));
     }
-    
     if (phoneFilter) {
-        filtered = filtered.filter(item => 
-            item.phone && item.phone.toLowerCase().includes(phoneFilter)
-        );
+        filtered = filtered.filter(item => item.phone && item.phone.toLowerCase().includes(phoneFilter));
     }
-    
     if (childSurnameFilter) {
-        filtered = filtered.filter(item => 
-            item.childSurname && item.childSurname.toLowerCase().includes(childSurnameFilter)
-        );
+        filtered = filtered.filter(item => item.childSurname && item.childSurname.toLowerCase().includes(childSurnameFilter));
     }
-    
     if (childNameFilter) {
-        filtered = filtered.filter(item => 
-            item.childName && item.childName.toLowerCase().includes(childNameFilter)
-        );
+        filtered = filtered.filter(item => item.childName && item.childName.toLowerCase().includes(childNameFilter));
     }
-    
     if (cardFilter) {
-        filtered = filtered.filter(item => 
-            item.cardNumber && item.cardNumber.toLowerCase().includes(cardFilter)
-        );
+        filtered = filtered.filter(item => item.cardNumber && item.cardNumber.toLowerCase().includes(cardFilter));
     }
-    
     if (birthdaySearch) {
         const searchDate = new Date(birthdaySearch);
         searchDate.setHours(0, 0, 0, 0);
-        
         filtered = filtered.filter(item => {
             const itemDate = formatDateForCompare(item.birthday);
-            if (!itemDate) return false;
-            return itemDate.getTime() === searchDate.getTime();
+            return itemDate && itemDate.getTime() === searchDate.getTime();
         });
     }
     
@@ -935,7 +935,6 @@ async function handleDeposit(row, parentName, childFullName, button) {
     try {
         const result = await callScript('deposit', { row: row, amount: totalAmount });
         if (result.error) throw new Error(result.error);
-        
         showToast(`✅ ${parentName}: +${numAmount.toFixed(2)} + бонус ${bonus.toFixed(2)} = ${totalAmount.toFixed(2)}`);
         await loadData(false);
     } catch (err) {
@@ -963,7 +962,6 @@ async function handleWithdraw(row, parentName, childFullName, button) {
     try {
         const result = await callScript('withdraw', { row: row, amount: numAmount });
         if (result.error) throw new Error(result.error);
-        
         showToast(`✅ ${parentName}: ${result.message}`);
         await loadData(false);
     } catch (err) {
