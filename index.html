@@ -15,6 +15,7 @@
     --success: #10b981;
     --warning: #f59e0b;
     --primary: #3b82f6;
+    --side-padding: 38px; /* Збільшені бічні відступи для ПК */
 }
 
 * {
@@ -33,16 +34,17 @@ body {
 .wrapper {
     max-width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 0 var(--side-padding); /* Бічні відступи */
 }
 
 .header {
     background: var(--white);
-    border-radius: 0;
+    border-radius: 12px;
     padding: 0;
     margin-bottom: 8px;
     border: none;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    overflow: hidden;
 }
 
 .header-row {
@@ -118,12 +120,10 @@ body {
 
 .controls {
     background: var(--white);
-    border-radius: 0;
-    padding: 8px 10px;
+    border-radius: 12px;
+    padding: 8px 12px;
     margin: 0 0 8px 0;
     border: 1px solid var(--border);
-    border-left: none;
-    border-right: none;
 }
 
 .controls-row {
@@ -186,14 +186,12 @@ body {
 
 .table-container {
     background: var(--white);
-    border-radius: 0;
+    border-radius: 12px;
     border: 1px solid var(--border);
-    border-left: none;
-    border-right: none;
     overflow-x: auto;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     padding: 0;
-    margin: 0;
+    margin: 0 0 8px 0;
 }
 
 .data-table {
@@ -541,10 +539,13 @@ body {
     opacity: 0.85;
 }
 
-/* Адаптив для мобільних - зберігаємо великі шрифти */
+/* Адаптив для мобільних */
 @media (max-width: 768px) {
+    :root {
+        --side-padding: 16px; /* Зменшені відступи на мобільних */
+    }
     .controls { padding: 6px 8px; margin-bottom: 6px; }
-    .table-container { margin: 0; }
+    .table-container { margin: 0 0 6px 0; }
     .data-table th, .data-table td { padding: 8px 6px; font-size: 13px; }
     .data-table th { font-size: 13px; }
     .search-field label { font-size: 10px; }
@@ -587,6 +588,13 @@ body {
     .visits-badge { font-size: 13px; }
     .date-cell { font-size: 12px; }
     .balance-positive, .balance-negative, .balance-zero { font-size: 13px; }
+}
+
+/* Для маленьких телефонів */
+@media (max-width: 480px) {
+    :root {
+        --side-padding: 12px; /* Мінімальні відступи */
+    }
 }
 </style>
 </head>
