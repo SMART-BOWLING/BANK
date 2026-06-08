@@ -37,7 +37,6 @@ body {
     padding: 0 var(--side-padding);
 }
 
-/* ВСІ ЗАКРУГЛЕННЯ ПРИБРАНО — скрізь border-radius: 0 */
 .header {
     background: var(--white);
     border-radius: 0;
@@ -56,7 +55,6 @@ body {
     border-bottom: 1px solid var(--border);
 }
 
-/* Банер ліворуч */
 .banner-area {
     flex: 1;
     min-width: 200px;
@@ -79,7 +77,6 @@ body {
     object-fit: cover;
 }
 
-/* Квадратні кнопки праворуч - без закруглень */
 .header-buttons {
     display: flex;
     gap: 0;
@@ -127,11 +124,10 @@ body {
     cursor: not-allowed;
 }
 
-/* ===== ПІДКЛАДКА ПОШУКУ: збільшена по висоті, без закруглень ===== */
 .controls {
     background: var(--white);
-    border-radius: 0;               /* прямі кути */
-    padding: 24px 20px;             /* збільшено вертикальний паддинг для більшої висоти */
+    border-radius: 0;
+    padding: 24px 20px;
     margin: 0 0 8px 0;
     border: 1px solid var(--border);
 }
@@ -149,7 +145,6 @@ body {
     min-width: 260px;
 }
 
-/* Сітка полів пошуку: поля стали компактнішими по ширині */
 .search-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -162,10 +157,9 @@ body {
     flex-direction: column;
 }
 
-/* ЗБІЛЬШЕНІ ЗАГОЛОВКИ ТЕКСТУ (LABEL) */
 .search-field label {
     display: block;
-    font-size: 14px;      /* збільшено (було 11px) */
+    font-size: 14px;
     font-weight: 700;
     color: var(--dark);
     margin-bottom: 6px;
@@ -176,12 +170,11 @@ body {
     font-size: 13px;
 }
 
-/* ПОЛЯ ВВОДУ: трохи більша висота, але без закруглень */
 .search-field input,
 .search-field select {
     width: 100%;
     padding: 9px 10px;
-    border-radius: 0;            /* прямі кути */
+    border-radius: 0;
     border: 1px solid var(--border);
     font-size: 14px;
     font-weight: 500;
@@ -197,10 +190,9 @@ body {
     box-shadow: 0 0 0 2px rgba(1,116,253,0.1);
 }
 
-/* Таблиця та інші блоки без закруглень */
 .table-container {
     background: var(--white);
-    border-radius: 0;            /* прямі кути */
+    border-radius: 0;
     border: 1px solid var(--border);
     overflow-x: auto;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -283,7 +275,7 @@ body {
 .btn-operation {
     padding: 5px 12px;
     border: none;
-    border-radius: 0;          /* прямі кути */
+    border-radius: 0;
     cursor: pointer;
     font-size: 12px;
     font-weight: 600;
@@ -379,7 +371,7 @@ body {
     background: var(--dark);
     color: white;
     padding: 10px 20px;
-    border-radius: 0;          /* прямі кути */
+    border-radius: 0;
     font-size: 13px;
     font-weight: 600;
     z-index: 1000;
@@ -402,7 +394,6 @@ body {
     color: #6b7280;
 }
 
-/* Модальне вікно без закруглень */
 .modal {
     display: none;
     position: fixed;
@@ -422,7 +413,7 @@ body {
 
 .modal-content {
     background: var(--white);
-    border-radius: 0;          /* прямі кути */
+    border-radius: 0;
     width: 90%;
     max-width: 450px;
     max-height: 90vh;
@@ -486,7 +477,7 @@ body {
 .form-group input {
     width: 100%;
     padding: 8px 12px;
-    border-radius: 0;          /* прямі кути */
+    border-radius: 0;
     border: 1px solid var(--border);
     font-size: 14px;
     font-weight: 500;
@@ -515,7 +506,7 @@ body {
 
 .modal-footer button {
     padding: 8px 16px;
-    border-radius: 0;          /* прямі кути */
+    border-radius: 0;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -549,7 +540,6 @@ body {
     background: #0160d4;
 }
 
-/* Адаптив для мобільних */
 @media (max-width: 768px) {
     :root {
         --side-padding: 16px;
@@ -639,7 +629,7 @@ body {
     <div class="header">
         <div class="header-row">
             <div class="banner-area" id="bannerContainer">
-                <img src="https://res.cloudinary.com/dplmdnxvk/image/upload/v1780928256/a21kjncqrsi1irsy9ztl.png" alt="Банер">
+                <img src="https://res.cloudinary.com/dplmdnxvk/image/upload/v1780930566/jnbjh9xkfz1ulwqhzwzv.png" alt="Банер">
             </div>
             
             <div class="header-buttons">
@@ -659,7 +649,6 @@ body {
         </div>
     </div>
 
-    <!-- Підкладка пошуку: збільшена по висоті (padding 24px 20px), поля компактніші, заголовки збільшені, закруглень немає -->
     <div class="controls">
         <div class="controls-row">
             <div class="search-section">
@@ -755,6 +744,8 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJrV2rrfc-YvRroHWFm
 
 let allData = [];
 let isLoading = false;
+let currentFilteredData = []; // Кэшируем отфильтрованные данные
+let tableBodyRef = null; // Ссылка на tbody для быстрого обновления
 
 function formatDate(dateValue) {
     if (!dateValue) return '—';
@@ -912,7 +903,171 @@ function applyFilters() {
         });
     }
     
-    renderTable(filtered);
+    currentFilteredData = filtered;
+    renderTableFast(filtered);
+}
+
+// БЫСТРЫЙ РЕНДЕРИНГ - обновляем только строки, а не всю таблицу
+function renderTableFast(data) {
+    const container = document.getElementById('tableContent');
+    if (!container) return;
+    
+    if (!data.length) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Немає даних</p></div>';
+        return;
+    }
+    
+    // Если таблицы еще нет - создаем с нуля
+    if (!tableBodyRef || !document.querySelector('.data-table')) {
+        createFullTable(data);
+        return;
+    }
+    
+    // Быстрое обновление - пересоздаем только tbody
+    const tbody = document.createElement('tbody');
+    
+    data.forEach(item => {
+        const tr = document.createElement('tr');
+        
+        tr.appendChild(createCellFast(item.parent || '—'));
+        tr.appendChild(createCellFast(item.phone || '—'));
+        tr.appendChild(createCellFast(item.childSurname || '—'));
+        tr.appendChild(createCellFast(item.childName || '—'));
+        tr.appendChild(createCellFast(formatDate(item.birthday), 'date-cell'));
+        tr.appendChild(createCellFast(item.cardNumber || '—'));
+        
+        const visitsCell = createCellFast('');
+        const visitsSpan = document.createElement('span');
+        visitsSpan.className = 'visits-badge';
+        visitsSpan.textContent = item.visits || 0;
+        visitsCell.appendChild(visitsSpan);
+        tr.appendChild(visitsCell);
+        
+        const balanceCell = createCellFast(formatNumber(item.balance));
+        balanceCell.className = getBalanceClass(item.balance);
+        tr.appendChild(balanceCell);
+        
+        const actionCell = createCellFast('');
+        actionCell.className = 'action-buttons';
+        
+        const childFullName = `${item.childSurname || ''} ${item.childName || ''}`.trim();
+        
+        const depositBtn = document.createElement('button');
+        depositBtn.className = 'btn-operation btn-deposit';
+        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> +5%';
+        depositBtn.onclick = (e) => {
+            e.preventDefault();
+            handleDeposit(item.row, item.parent, childFullName, depositBtn);
+        };
+        
+        const withdrawBtn = document.createElement('button');
+        withdrawBtn.className = 'btn-operation btn-withdraw';
+        withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Зняти';
+        withdrawBtn.onclick = (e) => {
+            e.preventDefault();
+            handleWithdraw(item.row, item.parent, childFullName, withdrawBtn);
+        };
+        
+        actionCell.appendChild(depositBtn);
+        actionCell.appendChild(withdrawBtn);
+        tr.appendChild(actionCell);
+        
+        tbody.appendChild(tr);
+    });
+    
+    // Заменяем только tbody, остальное не трогаем
+    const oldTbody = document.querySelector('.data-table tbody');
+    if (oldTbody) {
+        oldTbody.replaceWith(tbody);
+    }
+    tableBodyRef = tbody;
+}
+
+function createFullTable(data) {
+    const container = document.getElementById('tableContent');
+    const fragment = document.createDocumentFragment();
+    const table = document.createElement('table');
+    table.className = 'data-table';
+    
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Дата народж.', 'Номер картки', 'Відв.', 'Баланс', 'Дії'];
+    headers.forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+    
+    const tbody = document.createElement('tbody');
+    
+    data.forEach(item => {
+        const tr = document.createElement('tr');
+        
+        tr.appendChild(createCellFast(item.parent || '—'));
+        tr.appendChild(createCellFast(item.phone || '—'));
+        tr.appendChild(createCellFast(item.childSurname || '—'));
+        tr.appendChild(createCellFast(item.childName || '—'));
+        tr.appendChild(createCellFast(formatDate(item.birthday), 'date-cell'));
+        tr.appendChild(createCellFast(item.cardNumber || '—'));
+        
+        const visitsCell = createCellFast('');
+        const visitsSpan = document.createElement('span');
+        visitsSpan.className = 'visits-badge';
+        visitsSpan.textContent = item.visits || 0;
+        visitsCell.appendChild(visitsSpan);
+        tr.appendChild(visitsCell);
+        
+        const balanceCell = createCellFast(formatNumber(item.balance));
+        balanceCell.className = getBalanceClass(item.balance);
+        tr.appendChild(balanceCell);
+        
+        const actionCell = createCellFast('');
+        actionCell.className = 'action-buttons';
+        
+        const childFullName = `${item.childSurname || ''} ${item.childName || ''}`.trim();
+        
+        const depositBtn = document.createElement('button');
+        depositBtn.className = 'btn-operation btn-deposit';
+        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> +5%';
+        depositBtn.onclick = (e) => {
+            e.preventDefault();
+            handleDeposit(item.row, item.parent, childFullName, depositBtn);
+        };
+        
+        const withdrawBtn = document.createElement('button');
+        withdrawBtn.className = 'btn-operation btn-withdraw';
+        withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Зняти';
+        withdrawBtn.onclick = (e) => {
+            e.preventDefault();
+            handleWithdraw(item.row, item.parent, childFullName, withdrawBtn);
+        };
+        
+        actionCell.appendChild(depositBtn);
+        actionCell.appendChild(withdrawBtn);
+        tr.appendChild(actionCell);
+        
+        tbody.appendChild(tr);
+    });
+    
+    table.appendChild(tbody);
+    fragment.appendChild(table);
+    
+    container.innerHTML = '';
+    container.appendChild(fragment);
+    tableBodyRef = tbody;
+}
+
+function createCellFast(content, className = '') {
+    const td = document.createElement('td');
+    if (typeof content === 'string') {
+        td.textContent = content;
+    } else {
+        td.appendChild(content);
+    }
+    if (className) td.className = className;
+    return td;
 }
 
 async function handleDeposit(row, parentName, childFullName, button) {
@@ -935,10 +1090,20 @@ async function handleDeposit(row, parentName, childFullName, button) {
     try {
         const result = await callScript('deposit', { row: row, amount: totalAmount });
         if (result.error) throw new Error(result.error);
+        
+        const updatedItem = allData.find(item => item.row == row);
+        if (updatedItem) {
+            const currentBalance = parseFloat(updatedItem.balance);
+            if (!isNaN(currentBalance)) {
+                updatedItem.balance = (currentBalance + totalAmount).toString();
+            }
+        }
+        
+        applyFilters();
         showToast(`✅ ${parentName}: +${numAmount.toFixed(2)} + бонус ${bonus.toFixed(2)} = ${totalAmount.toFixed(2)}`);
-        await loadData(false);
     } catch (err) {
         showToast(`Помилка: ${err.message}`, true);
+        await loadData(false);
     } finally {
         button.disabled = false;
         button.innerHTML = originalHtml;
@@ -962,10 +1127,23 @@ async function handleWithdraw(row, parentName, childFullName, button) {
     try {
         const result = await callScript('withdraw', { row: row, amount: numAmount });
         if (result.error) throw new Error(result.error);
+        
+        const updatedItem = allData.find(item => item.row == row);
+        if (updatedItem) {
+            const currentBalance = parseFloat(updatedItem.balance);
+            if (!isNaN(currentBalance)) {
+                updatedItem.balance = (currentBalance - numAmount).toString();
+            }
+            if (updatedItem.visits !== undefined) {
+                updatedItem.visits = (parseInt(updatedItem.visits) || 0) + 1;
+            }
+        }
+        
+        applyFilters();
         showToast(`✅ ${parentName}: ${result.message}`);
-        await loadData(false);
     } catch (err) {
         showToast(`Помилка: ${err.message}`, true);
+        await loadData(false);
     } finally {
         button.disabled = false;
         button.innerHTML = originalHtml;
@@ -1038,84 +1216,6 @@ function closeAddModal() {
     document.getElementById('addModal').classList.remove('active');
 }
 
-function renderTable(data) {
-    const container = document.getElementById('tableContent');
-    if (!container) return;
-    
-    if (!data.length) {
-        container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Немає даних</p></div>';
-        return;
-    }
-    
-    const table = document.createElement('table');
-    table.className = 'data-table';
-    
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
-    const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Дата народж.', 'Номер картки', 'Відв.', 'Баланс', 'Дії'];
-    headers.forEach(text => {
-        const th = document.createElement('th');
-        th.textContent = text;
-        headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-    
-    const tbody = document.createElement('tbody');
-    data.forEach(item => {
-        const tr = document.createElement('tr');
-        
-        tr.appendChild(createCell(item.parent || '—'));
-        tr.appendChild(createCell(item.phone || '—'));
-        tr.appendChild(createCell(item.childSurname || '—'));
-        tr.appendChild(createCell(item.childName || '—'));
-        tr.appendChild(createCell(formatDate(item.birthday), 'date-cell'));
-        tr.appendChild(createCell(item.cardNumber || '—'));
-        
-        const visitsCell = createCell('');
-        const visitsSpan = document.createElement('span');
-        visitsSpan.className = 'visits-badge';
-        visitsSpan.textContent = item.visits || 0;
-        visitsCell.appendChild(visitsSpan);
-        tr.appendChild(visitsCell);
-        
-        const balanceCell = createCell(formatNumber(item.balance));
-        balanceCell.className = getBalanceClass(item.balance);
-        tr.appendChild(balanceCell);
-        
-        const actionCell = createCell('');
-        actionCell.className = 'action-buttons';
-        
-        const childFullName = `${item.childSurname || ''} ${item.childName || ''}`.trim();
-        
-        const depositBtn = document.createElement('button');
-        depositBtn.className = 'btn-operation btn-deposit';
-        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> +5%';
-        depositBtn.onclick = (e) => {
-            e.preventDefault();
-            handleDeposit(item.row, item.parent, childFullName, depositBtn);
-        };
-        
-        const withdrawBtn = document.createElement('button');
-        withdrawBtn.className = 'btn-operation btn-withdraw';
-        withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Зняти';
-        withdrawBtn.onclick = (e) => {
-            e.preventDefault();
-            handleWithdraw(item.row, item.parent, childFullName, withdrawBtn);
-        };
-        
-        actionCell.appendChild(depositBtn);
-        actionCell.appendChild(withdrawBtn);
-        tr.appendChild(actionCell);
-        
-        tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    
-    container.innerHTML = '';
-    container.appendChild(table);
-}
-
 function createCell(content, className = '') {
     const td = document.createElement('td');
     if (typeof content === 'string') {
@@ -1127,14 +1227,24 @@ function createCell(content, className = '') {
     return td;
 }
 
+// СУПЕР БЫСТРАЯ ОЧИСТКА - без задержек и без пересоздания таблицы
 function clearSearch() {
+    // Очищаем поля
     document.getElementById('parentSearch').value = '';
     document.getElementById('phoneSearch').value = '';
     document.getElementById('childSurnameSearch').value = '';
     document.getElementById('childNameSearch').value = '';
     document.getElementById('cardSearch').value = '';
     document.getElementById('birthdaySearch').value = '';
-    applyFilters();
+    
+    // Мгновенно показываем все данные без пересоздания таблицы
+    if (allData.length > 0) {
+        currentFilteredData = [...allData];
+        renderTableFast(currentFilteredData);
+    } else {
+        applyFilters();
+    }
+    
     showToast('Пошук очищено');
 }
 
