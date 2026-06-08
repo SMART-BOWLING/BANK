@@ -709,7 +709,7 @@ body {
                 <input type="text" id="addPhone" placeholder="+38 XXX XXX XX XX">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-child"></i> Прізвище дитини *</label>
+                <label><i class="fas fa-user"></i> Прізвище дитини *</label>
                 <input type="text" id="addChildSurname" placeholder="Прізвище дитини">
             </div>
             <div class="form-group">
@@ -955,7 +955,7 @@ function renderTableFast(data) {
         
         const depositBtn = document.createElement('button');
         depositBtn.className = 'btn-operation btn-deposit';
-        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> +5%';
+        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Поповнення';
         depositBtn.onclick = (e) => {
             e.preventDefault();
             handleDeposit(item.row, item.parent, childFullName, depositBtn);
