@@ -106,11 +106,10 @@ body {
     background: var(--white);
 }
 
-/* === КНОПКИ ВВЕРХУ — без змін (розмір шрифту не збільшуємо, жирність стандартна) === */
 .search-btn, .clear-btn, .refresh-btn, .add-btn {
     padding: 0 24px;
     border-radius: 0;
-    font-size: 15px;         /* залишаємо оригінальний розмір */
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     display: inline-flex;
@@ -122,47 +121,13 @@ body {
     margin: 0;
 }
 
-.search-btn {
+.search-btn, .clear-btn, .refresh-btn, .add-btn {
     background: #0174fd;
     color: white;
     border: none;
 }
 
-.search-btn:hover {
-    background: #0174fd;
-    opacity: 0.85;
-}
-
-.clear-btn {
-    background: #0174fd;
-    color: white;
-    border: none;
-}
-
-.clear-btn:hover {
-    background: #0174fd;
-    opacity: 0.85;
-}
-
-.refresh-btn {
-    background: #0174fd;
-    color: white;
-    border: none;
-}
-
-.refresh-btn:hover {
-    background: #0174fd;
-    opacity: 0.85;
-}
-
-.add-btn {
-    background: #0174fd;
-    color: white;
-    border: none;
-}
-
-.add-btn:hover {
-    background: #0174fd;
+.search-btn:hover, .clear-btn:hover, .refresh-btn:hover, .add-btn:hover {
     opacity: 0.85;
 }
 
@@ -175,9 +140,6 @@ body {
     font-size: 18px;
 }
 
-/* ========== ВСІ ІНШІ ДАНІ — ЖИРНІШЕ ТА БІЛЬШИЙ ШРИФТ ========== */
-
-/* Контроли (блок пошуку) */
 .controls {
     background: var(--white);
     border-radius: 0;
@@ -219,24 +181,22 @@ body {
     flex-direction: column;
 }
 
-/* Лейбли (підписи полів) */
 .search-field label {
     display: block;
-    font-size: 15px;        /* збільшено з 12px */
-    font-weight: 700;       /* жирніше */
+    font-size: 15px;
+    font-weight: 700;
     color: var(--dark);
     margin-bottom: 6px;
 }
 
-/* Поля вводу та селекти */
 .search-field input,
 .search-field select {
     width: 100%;
     padding: 12px 16px;
     border-radius: 8px;
     border: 1px solid var(--border);
-    font-size: 16px;        /* збільшено з 14px */
-    font-weight: 600;       /* жирніший текст */
+    font-size: 16px;
+    font-weight: 600;
     background: #f9fafb;
     transition: all 0.2s;
 }
@@ -249,7 +209,6 @@ body {
     box-shadow: 0 0 0 3px rgba(1,116,253,0.1);
 }
 
-/* Таблиця */
 .table-container {
     background: var(--white);
     border-radius: 0;
@@ -265,7 +224,7 @@ body {
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 16px;        /* збільшено з 14px */
+    font-size: 16px;
     font-weight: 600;
     table-layout: fixed;
 }
@@ -274,7 +233,7 @@ body {
     background: #f8fafc;
     padding: 16px 12px;
     text-align: center;
-    font-weight: 700;       /* жирні заголовки */
+    font-weight: 700;
     font-size: 16px;
     color: var(--dark);
     border-bottom: 1px solid var(--border);
@@ -287,8 +246,8 @@ body {
     border-bottom: 1px solid #f0f2f5;
     color: #374151;
     text-align: center;
-    font-weight: 600;       /* жирні комірки */
-    font-size: 15px;        /* трохи збільшено */
+    font-weight: 600;
+    font-size: 15px;
 }
 
 .data-table tr:hover {
@@ -324,16 +283,15 @@ body {
     font-weight: 700;
 }
 
-/* Стиль для цифр відвідувань - без підкладки, чорний текст як всюди */
 .visits-badge {
     display: inline-block;
-    color: #374151;       /* такий самий чорний колір, як у інших цифр */
+    color: #374151;
     font-weight: 700;
     font-size: 15px;
     text-align: center;
     min-width: 50px;
-    background: transparent;  /* прибрано фон */
-    padding: 0;               /* прибрано падінги, щоб не було "подушки" */
+    background: transparent;
+    padding: 0;
     border-radius: 0;
 }
 
@@ -363,7 +321,6 @@ body {
     transform: none;
 }
 
-/* НОВІ КОЛЬОРИ: поповнення - #017afe, зняття - #e41598 */
 .btn-deposit {
     background: #017afe;
     color: white;
@@ -460,12 +417,11 @@ body {
 
 .date-cell {
     white-space: nowrap;
-    font-size: 14px;      /* збільшено */
+    font-size: 14px;
     font-weight: 600;
     color: #6b7280;
 }
 
-/* Модальне вікно */
 .modal {
     display: none;
     position: fixed;
@@ -507,7 +463,7 @@ body {
 }
 
 .modal-header h2 {
-    font-size: 22px;        /* більший шрифт */
+    font-size: 22px;
     font-weight: 800;
     color: var(--dark);
 }
@@ -534,7 +490,7 @@ body {
 
 .form-group label {
     display: block;
-    font-size: 15px;        /* збільшено */
+    font-size: 15px;
     font-weight: 700;
     color: var(--dark);
     margin-bottom: 8px;
@@ -550,7 +506,7 @@ body {
     padding: 12px 16px;
     border-radius: 8px;
     border: 1px solid var(--border);
-    font-size: 16px;        /* збільшено */
+    font-size: 16px;
     font-weight: 600;
     transition: all 0.2s;
 }
@@ -605,11 +561,9 @@ body {
 }
 
 .btn-submit:hover:not(:disabled) {
-    background: #0174fd;
     opacity: 0.85;
 }
 
-/* Адаптив - теж коригуємо шрифти для мобільних, але зберігаємо жирність */
 @media (max-width: 768px) {
     body { padding: 0; }
     .controls { margin: 0 0 20px 0; padding: 15px; }
@@ -683,12 +637,12 @@ body {
             <div class="search-section">
                 <div class="search-grid">
                     <div class="search-field">
-                        <label><i class="fas fa-user"></i> Пошук за прізвищем</label>
-                        <input type="text" id="surnameSearch" placeholder="Введіть прізвище...">
+                        <label><i class="fas fa-user"></i> Пошук за ПІБ дорослого</label>
+                        <input type="text" id="parentSearch" placeholder="Введіть ПІБ дорослого...">
                     </div>
                     <div class="search-field">
-                        <label><i class="fas fa-user"></i> Пошук за ім'ям</label>
-                        <input type="text" id="nameSearch" placeholder="Введіть ім'я...">
+                        <label><i class="fas fa-child"></i> Пошук за ПІБ дитини</label>
+                        <input type="text" id="childNameSearch" placeholder="Введіть ПІБ дитини...">
                     </div>
                     <div class="search-field">
                         <label><i class="fas fa-credit-card"></i> Пошук за карткою</label>
@@ -721,15 +675,23 @@ body {
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <label><i class="fas fa-user-tag"></i> Прізвище *</label>
-                <input type="text" id="addSurname" placeholder="Введіть прізвище">
+                <label><i class="fas fa-user-tag"></i> ПІБ дорослого (Родитель) *</label>
+                <input type="text" id="addParent" placeholder="Введіть ПІБ мами/тата">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-user"></i> Ім'я *</label>
-                <input type="text" id="addName" placeholder="Введіть ім'я">
+                <label><i class="fas fa-phone-alt"></i> Мобільний телефон *</label>
+                <input type="text" id="addPhone" placeholder="+38 XXX XXX XX XX">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-calendar-alt"></i> Дата народження</label>
+                <label><i class="fas fa-child"></i> Прізвище дитини *</label>
+                <input type="text" id="addChildSurname" placeholder="Прізвище дитини">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Ім'я дитини *</label>
+                <input type="text" id="addChildName" placeholder="Ім'я дитини">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-calendar-alt"></i> Дата народження дитини</label>
                 <input type="date" id="addBirthday">
             </div>
             <div class="form-group">
@@ -738,7 +700,7 @@ body {
             </div>
             <div class="form-group">
                 <label><i class="fas fa-money-bill-wave"></i> Початковий баланс</label>
-                <input type="number" id="addBalance" placeholder="0" step="0.01">
+                <input type="number" id="addBalance" placeholder="0" step="0.01" value="0">
             </div>
             <div class="form-group">
                 <label><i class="fas fa-chart-line"></i> Відвідування</label>
@@ -753,14 +715,13 @@ body {
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZXiHFHKi0sj7slDoQ4PuXqUB2Hn7RVmDf_0J2tmma7qe4XT4oG6EhahrpHEbRdko7EA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJrV2rrfc-YvRroHWFmk1eMrhj48kyRRFiw_v2P2QuCsWoi8egSJcNBFhrqjsyITFnTA/exec';
 
 let allData = [];
 let isLoading = false;
 
 function formatDate(dateValue) {
     if (!dateValue) return '—';
-    
     let date;
     if (dateValue instanceof Date) {
         date = dateValue;
@@ -772,9 +733,7 @@ function formatDate(dateValue) {
     } else {
         return '—';
     }
-    
     if (isNaN(date.getTime())) return '—';
-    
     const d = String(date.getDate()).padStart(2, '0');
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const y = date.getFullYear();
@@ -783,7 +742,6 @@ function formatDate(dateValue) {
 
 function formatDateForCompare(dateValue) {
     if (!dateValue) return null;
-    
     let date;
     if (dateValue instanceof Date) {
         date = dateValue;
@@ -795,9 +753,7 @@ function formatDateForCompare(dateValue) {
     } else {
         return null;
     }
-    
     if (isNaN(date.getTime())) return null;
-    
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
@@ -868,13 +824,9 @@ async function loadData(showLoading = true) {
     
     try {
         const data = await callScript('getData');
-        
         if (data && data.error) throw new Error(data.error);
-        
         allData = Array.isArray(data) ? data : [];
-        
         applyFilters();
-        
     } catch (err) {
         console.error(err);
         if (container) {
@@ -891,23 +843,24 @@ async function loadData(showLoading = true) {
 }
 
 function applyFilters() {
-    const surnameFilter = document.getElementById('surnameSearch').value.toLowerCase().trim();
-    const nameFilter = document.getElementById('nameSearch').value.toLowerCase().trim();
+    const parentFilter = document.getElementById('parentSearch').value.toLowerCase().trim();
+    const childFilter = document.getElementById('childNameSearch').value.toLowerCase().trim();
     const cardFilter = document.getElementById('cardSearch').value.toLowerCase().trim();
     const birthdaySearch = document.getElementById('birthdaySearch').value;
     
     let filtered = [...allData];
     
-    if (surnameFilter) {
+    if (parentFilter) {
         filtered = filtered.filter(item => 
-            item.surname && item.surname.toLowerCase().includes(surnameFilter)
+            item.parent && item.parent.toLowerCase().includes(parentFilter)
         );
     }
     
-    if (nameFilter) {
-        filtered = filtered.filter(item => 
-            item.name && item.name.toLowerCase().includes(nameFilter)
-        );
+    if (childFilter) {
+        filtered = filtered.filter(item => {
+            const fullChildName = `${item.childSurname || ''} ${item.childName || ''}`.toLowerCase();
+            return fullChildName.includes(childFilter);
+        });
     }
     
     if (cardFilter) {
@@ -930,8 +883,8 @@ function applyFilters() {
     renderTable(filtered);
 }
 
-async function handleDeposit(row, surname, name, button) {
-    const amount = prompt(`Введіть суму поповнення для ${surname} ${name}:\n(буде додано бонус 5%)`, "");
+async function handleDeposit(row, parentName, childFullName, button) {
+    const amount = prompt(`Введіть суму поповнення для ${parentName} (дитина: ${childFullName}):\n(буде додано бонус 5%)`, "");
     if (amount === null) return;
     
     let numAmount = parseFloat(amount);
@@ -951,7 +904,7 @@ async function handleDeposit(row, surname, name, button) {
         const result = await callScript('deposit', { row: row, amount: totalAmount });
         if (result.error) throw new Error(result.error);
         
-        showToast(`✅ ${surname} ${name}: Поповнення на ${numAmount.toFixed(2)} + бонус 5% (${bonus.toFixed(2)}) = ${totalAmount.toFixed(2)}`);
+        showToast(`✅ ${parentName}: Поповнення на ${numAmount.toFixed(2)} + бонус 5% (${bonus.toFixed(2)}) = ${totalAmount.toFixed(2)}`);
         await loadData(false);
     } catch (err) {
         showToast(`Помилка: ${err.message}`, true);
@@ -961,8 +914,8 @@ async function handleDeposit(row, surname, name, button) {
     }
 }
 
-async function handleWithdraw(row, surname, name, button) {
-    const amount = prompt(`Введіть суму зняття для ${surname} ${name}:`, "");
+async function handleWithdraw(row, parentName, childFullName, button) {
+    const amount = prompt(`Введіть суму зняття для ${parentName} (дитина: ${childFullName}):`, "");
     if (amount === null) return;
     
     const numAmount = parseFloat(amount);
@@ -979,7 +932,7 @@ async function handleWithdraw(row, surname, name, button) {
         const result = await callScript('withdraw', { row: row, amount: numAmount });
         if (result.error) throw new Error(result.error);
         
-        showToast(`✅ ${surname} ${name}: ${result.message}`);
+        showToast(`✅ ${parentName}: ${result.message}`);
         await loadData(false);
     } catch (err) {
         showToast(`Помилка: ${err.message}`, true);
@@ -990,30 +943,22 @@ async function handleWithdraw(row, surname, name, button) {
 }
 
 async function addNewUser() {
-    const surname = document.getElementById('addSurname').value.trim();
-    const name = document.getElementById('addName').value.trim();
+    const parent = document.getElementById('addParent').value.trim();
+    const phone = document.getElementById('addPhone').value.trim();
+    const childSurname = document.getElementById('addChildSurname').value.trim();
+    const childName = document.getElementById('addChildName').value.trim();
     const birthday = document.getElementById('addBirthday').value;
     const cardNumber = document.getElementById('addCardNumber').value.trim();
     let balance = parseFloat(document.getElementById('addBalance').value);
     
-    if (isNaN(balance)) {
-        balance = 0;
-    }
-    
+    if (isNaN(balance)) balance = 0;
     const visits = 1;
     
-    if (!surname) {
-        showToast("Введіть прізвище", true);
-        return;
-    }
-    if (!name) {
-        showToast("Введіть ім'я", true);
-        return;
-    }
-    if (!cardNumber) {
-        showToast("Введіть номер картки", true);
-        return;
-    }
+    if (!parent) { showToast("Введіть ПІБ дорослого", true); return; }
+    if (!phone) { showToast("Введіть мобільний телефон", true); return; }
+    if (!childSurname) { showToast("Введіть прізвище дитини", true); return; }
+    if (!childName) { showToast("Введіть ім'я дитини", true); return; }
+    if (!cardNumber) { showToast("Введіть номер картки", true); return; }
     
     const submitBtn = document.getElementById('submitAddBtn');
     const originalHtml = submitBtn.innerHTML;
@@ -1023,8 +968,10 @@ async function addNewUser() {
     
     try {
         const result = await callScript('addUser', { 
-            surname: surname,
-            name: name,
+            parent: parent,
+            phone: phone,
+            childSurname: childSurname,
+            childName: childName,
             birthday: birthday || null,
             cardNumber: cardNumber,
             visits: visits,
@@ -1033,15 +980,17 @@ async function addNewUser() {
         
         if (result.error) throw new Error(result.error);
         
-        showToast(`✅ Клієнт ${surname} ${name} успішно доданий`);
+        showToast(`✅ Клієнт ${parent} (дитина: ${childSurname} ${childName}) успішно доданий`);
         closeAddModal();
         await loadData(true);
         
-        document.getElementById('addSurname').value = '';
-        document.getElementById('addName').value = '';
+        document.getElementById('addParent').value = '';
+        document.getElementById('addPhone').value = '';
+        document.getElementById('addChildSurname').value = '';
+        document.getElementById('addChildName').value = '';
         document.getElementById('addBirthday').value = '';
         document.getElementById('addCardNumber').value = '';
-        document.getElementById('addBalance').value = '';
+        document.getElementById('addBalance').value = '0';
         
     } catch (err) {
         showToast(`Помилка: ${err.message}`, true);
@@ -1057,7 +1006,6 @@ function openAddModal() {
 
 function closeAddModal() {
     document.getElementById('addModal').classList.remove('active');
-    document.getElementById('addBalance').value = '';
 }
 
 function renderTable(data) {
@@ -1074,7 +1022,7 @@ function renderTable(data) {
     
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    const headers = ['Прізвище', "Ім'я", 'Дата народження', 'Номер картки', 'Відвідування', 'Баланс', 'Дії'];
+    const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Дата народження', 'Номер картки', 'Відвідування', 'Баланс', 'Дії'];
     headers.forEach(text => {
         const th = document.createElement('th');
         th.textContent = text;
@@ -1087,12 +1035,13 @@ function renderTable(data) {
     data.forEach(item => {
         const tr = document.createElement('tr');
         
-        tr.appendChild(createCell(item.surname || '—'));
-        tr.appendChild(createCell(item.name || '—'));
+        tr.appendChild(createCell(item.parent || '—'));
+        tr.appendChild(createCell(item.phone || '—'));
+        tr.appendChild(createCell(item.childSurname || '—'));
+        tr.appendChild(createCell(item.childName || '—'));
         tr.appendChild(createCell(formatDate(item.birthday), 'date-cell'));
         tr.appendChild(createCell(item.cardNumber || '—'));
         
-        // Колонка відвідування: тільки цифри, без підкладки, стандартний колір тексту
         const visitsCell = createCell('');
         const visitsSpan = document.createElement('span');
         visitsSpan.className = 'visits-badge';
@@ -1107,12 +1056,14 @@ function renderTable(data) {
         const actionCell = createCell('');
         actionCell.className = 'action-buttons';
         
+        const childFullName = `${item.childSurname || ''} ${item.childName || ''}`.trim();
+        
         const depositBtn = document.createElement('button');
         depositBtn.className = 'btn-operation btn-deposit';
         depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Поповнення (+5%)';
         depositBtn.onclick = (e) => {
             e.preventDefault();
-            handleDeposit(item.row, item.surname, item.name, depositBtn);
+            handleDeposit(item.row, item.parent, childFullName, depositBtn);
         };
         
         const withdrawBtn = document.createElement('button');
@@ -1120,7 +1071,7 @@ function renderTable(data) {
         withdrawBtn.innerHTML = '<i class="fas fa-minus-circle"></i> Зняття';
         withdrawBtn.onclick = (e) => {
             e.preventDefault();
-            handleWithdraw(item.row, item.surname, item.name, withdrawBtn);
+            handleWithdraw(item.row, item.parent, childFullName, withdrawBtn);
         };
         
         actionCell.appendChild(depositBtn);
@@ -1147,8 +1098,8 @@ function createCell(content, className = '') {
 }
 
 function clearSearch() {
-    document.getElementById('surnameSearch').value = '';
-    document.getElementById('nameSearch').value = '';
+    document.getElementById('parentSearch').value = '';
+    document.getElementById('childNameSearch').value = '';
     document.getElementById('cardSearch').value = '';
     document.getElementById('birthdaySearch').value = '';
     applyFilters();
@@ -1167,24 +1118,20 @@ function showToast(msg, isError = false) {
 }
 
 function handleKeyPress(e) {
-    if (e.key === 'Enter') {
-        applyFilters();
-    }
+    if (e.key === 'Enter') applyFilters();
 }
 
 window.onclick = function(event) {
     const modal = document.getElementById('addModal');
-    if (event.target === modal) {
-        closeAddModal();
-    }
+    if (event.target === modal) closeAddModal();
 }
 
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('searchBtnHeader').addEventListener('click', applyFilters);
     document.getElementById('clearSearchBtnHeader').addEventListener('click', clearSearch);
     
-    document.getElementById('surnameSearch').addEventListener('keypress', handleKeyPress);
-    document.getElementById('nameSearch').addEventListener('keypress', handleKeyPress);
+    document.getElementById('parentSearch').addEventListener('keypress', handleKeyPress);
+    document.getElementById('childNameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('cardSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('birthdaySearch').addEventListener('change', applyFilters);
     
