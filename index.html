@@ -17,10 +17,8 @@
     --primary: #3b82f6;
     --side-padding: 70px;
 }
-
     
 
-    
 * {
     margin: 0;
     padding: 0;
@@ -231,6 +229,7 @@ body {
     text-align: center;
     font-weight: 500;
     font-size: 15px;
+    vertical-align: middle;
 }
 
 .data-table tr:hover {
@@ -543,6 +542,41 @@ body {
     background: #0160d4;
 }
 
+/* Стили для редактируемых ячеек */
+.editable-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.cell-value {
+    word-break: break-word;
+    max-width: 150px;
+}
+
+.btn-edit-cell {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 2px 4px;
+    transition: all 0.2s;
+    opacity: 0;
+    flex-shrink: 0;
+}
+
+tr:hover .btn-edit-cell {
+    opacity: 1;
+}
+
+.btn-edit-cell:hover {
+    color: #0174fd;
+    transform: scale(1.1);
+}
+
 /* Скрытая колонка для даты регистрации */
 .registration-date-col {
     display: none !important;
@@ -600,6 +634,7 @@ body {
     .date-cell { font-size: 12px; }
     .balance-positive, .balance-negative, .balance-zero { font-size: 13px; }
     .modal-content { border-radius: 0; }
+    .btn-edit-cell { opacity: 0.7; font-size: 11px; }
 }
 
 @media (max-width: 480px) {
@@ -629,6 +664,8 @@ body {
         grid-template-columns: 1fr;
         gap: 10px;
     }
+    
+    .btn-edit-cell { opacity: 0.7; }
 }
 </style>
 </head>
@@ -700,6 +737,29 @@ body {
     </div>
 </div>
 
+<!-- Модальное окно для редактирования -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-edit"></i> <span id="editModalTitle">Редагувати</span></h2>
+            <button class="modal-close" onclick="closeEditModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label><i class="fas fa-pen"></i> <span id="editFieldLabel">Нове значення</span></label>
+                <input type="text" id="editFieldValue" placeholder="Введіть нове значення">
+            </div>
+            <input type="hidden" id="editRow">
+            <input type="hidden" id="editField">
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeEditModal()">Скасувати</button>
+            <button class="btn-submit" id="submitEditBtn" onclick="saveEdit()"><i class="fas fa-save"></i> Зберегти</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для добавления -->
 <div id="addModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -748,12 +808,21 @@ body {
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHcZEbi6E5zGO6tEBCWQfVY_UB-BWBKSHQwMq7-beGSKw_-KpY9d6_nVIKHbOEfBI98A/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxN4jHAMmb1iabgIH_KuKfYIBBSDNhpfMVEhjklyzN20tc5jahxnGlZ6N-XT9lm6K9D5A/exec';
 
 let allData = [];
 let isLoading = false;
-let currentFilteredData = []; // Кэшируем отфильтрованные данные
-let tableBodyRef = null; // Ссылка на tbody для быстрого обновления
+let currentFilteredData = [];
+let tableBodyRef = null;
+
+const FIELD_MAP = {
+    'parent': { label: 'ПІБ дорослого', column: 1 },
+    'phone': { label: 'Телефон', column: 2 },
+    'childSurname': { label: 'Прізвище дитини', column: 3 },
+    'childName': { label: "Ім'я дитини", column: 4 },
+    'birthday': { label: 'Дата народження', column: 5 },
+    'cardNumber': { label: 'Номер картки', column: 6 }
+};
 
 function formatDate(dateValue) {
     if (!dateValue) return '—';
@@ -915,7 +984,30 @@ function applyFilters() {
     renderTableFast(filtered);
 }
 
-// БЫСТРЫЙ РЕНДЕРИНГ - обновляем только строки, а не всю таблицу
+function createEditableCell(value, row, field, isDate = false) {
+    const container = document.createElement('div');
+    container.className = 'editable-cell';
+    
+    const span = document.createElement('span');
+    span.className = 'cell-value';
+    span.textContent = isDate ? formatDate(value) : (value || '—');
+    
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn-edit-cell';
+    editBtn.innerHTML = '<i class="fas fa-pen"></i>';
+    editBtn.title = 'Редагувати';
+    editBtn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openEditModal(row, field, value);
+    };
+    
+    container.appendChild(span);
+    container.appendChild(editBtn);
+    
+    return container;
+}
+
 function renderTableFast(data) {
     const container = document.getElementById('tableContent');
     if (!container) return;
@@ -925,43 +1017,58 @@ function renderTableFast(data) {
         return;
     }
     
-    // Если таблицы еще нет - создаем с нуля
     if (!tableBodyRef || !document.querySelector('.data-table')) {
         createFullTable(data);
         return;
     }
     
-    // Быстрое обновление - пересоздаем только tbody
     const tbody = document.createElement('tbody');
     
     data.forEach(item => {
         const tr = document.createElement('tr');
         
-        tr.appendChild(createCellFast(item.parent || '—'));
-        tr.appendChild(createCellFast(item.phone || '—'));
-        tr.appendChild(createCellFast(item.childSurname || '—'));
-        tr.appendChild(createCellFast(item.childName || '—'));
-        tr.appendChild(createCellFast(formatDate(item.birthday), 'date-cell'));
-        tr.appendChild(createCellFast(item.cardNumber || '—'));
+        const parentCell = document.createElement('td');
+        parentCell.appendChild(createEditableCell(item.parent, item.row, 'parent'));
+        tr.appendChild(parentCell);
         
-        const visitsCell = createCellFast('');
+        const phoneCell = document.createElement('td');
+        phoneCell.appendChild(createEditableCell(item.phone, item.row, 'phone'));
+        tr.appendChild(phoneCell);
+        
+        const surnameCell = document.createElement('td');
+        surnameCell.appendChild(createEditableCell(item.childSurname, item.row, 'childSurname'));
+        tr.appendChild(surnameCell);
+        
+        const nameCell = document.createElement('td');
+        nameCell.appendChild(createEditableCell(item.childName, item.row, 'childName'));
+        tr.appendChild(nameCell);
+        
+        const birthdayCell = document.createElement('td');
+        birthdayCell.appendChild(createEditableCell(item.birthday, item.row, 'birthday', true));
+        tr.appendChild(birthdayCell);
+        
+        const cardCell = document.createElement('td');
+        cardCell.appendChild(createEditableCell(item.cardNumber, item.row, 'cardNumber'));
+        tr.appendChild(cardCell);
+        
+        const visitsCell = document.createElement('td');
         const visitsSpan = document.createElement('span');
         visitsSpan.className = 'visits-badge';
         visitsSpan.textContent = item.visits || 0;
         visitsCell.appendChild(visitsSpan);
         tr.appendChild(visitsCell);
         
-        const balanceCell = createCellFast(formatNumber(item.balance));
+        const balanceCell = document.createElement('td');
+        balanceCell.textContent = formatNumber(item.balance);
         balanceCell.className = getBalanceClass(item.balance);
         tr.appendChild(balanceCell);
         
-        // Скрытая ячейка для даты регистрации (не отображается)
         const registrationCell = document.createElement('td');
         registrationCell.className = 'registration-date-col';
-        registrationCell.textContent = ''; // Не отображаем
+        registrationCell.textContent = '';
         tr.appendChild(registrationCell);
         
-        const actionCell = createCellFast('');
+        const actionCell = document.createElement('td');
         actionCell.className = 'action-buttons';
         
         const childFullName = `${item.childSurname || ''} ${item.childName || ''}`.trim();
@@ -989,7 +1096,6 @@ function renderTableFast(data) {
         tbody.appendChild(tr);
     });
     
-    // Заменяем только tbody, остальное не трогаем
     const oldTbody = document.querySelector('.data-table tbody');
     if (oldTbody) {
         oldTbody.replaceWith(tbody);
@@ -1007,14 +1113,12 @@ function createFullTable(data) {
     const headerRow = document.createElement('tr');
     const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Дата народж.', 'Номер картки', 'Відв.', 'Баланс', 'Дії'];
     
-    // Создаем заголовки
     headers.forEach(text => {
         const th = document.createElement('th');
         th.textContent = text;
         headerRow.appendChild(th);
     });
     
-    // Добавляем скрытый заголовок для даты регистрации
     const hiddenTh = document.createElement('th');
     hiddenTh.className = 'registration-date-col';
     hiddenTh.textContent = 'Дата реєстрації';
@@ -1028,31 +1132,48 @@ function createFullTable(data) {
     data.forEach(item => {
         const tr = document.createElement('tr');
         
-        tr.appendChild(createCellFast(item.parent || '—'));
-        tr.appendChild(createCellFast(item.phone || '—'));
-        tr.appendChild(createCellFast(item.childSurname || '—'));
-        tr.appendChild(createCellFast(item.childName || '—'));
-        tr.appendChild(createCellFast(formatDate(item.birthday), 'date-cell'));
-        tr.appendChild(createCellFast(item.cardNumber || '—'));
+        const parentCell = document.createElement('td');
+        parentCell.appendChild(createEditableCell(item.parent, item.row, 'parent'));
+        tr.appendChild(parentCell);
         
-        const visitsCell = createCellFast('');
+        const phoneCell = document.createElement('td');
+        phoneCell.appendChild(createEditableCell(item.phone, item.row, 'phone'));
+        tr.appendChild(phoneCell);
+        
+        const surnameCell = document.createElement('td');
+        surnameCell.appendChild(createEditableCell(item.childSurname, item.row, 'childSurname'));
+        tr.appendChild(surnameCell);
+        
+        const nameCell = document.createElement('td');
+        nameCell.appendChild(createEditableCell(item.childName, item.row, 'childName'));
+        tr.appendChild(nameCell);
+        
+        const birthdayCell = document.createElement('td');
+        birthdayCell.appendChild(createEditableCell(item.birthday, item.row, 'birthday', true));
+        tr.appendChild(birthdayCell);
+        
+        const cardCell = document.createElement('td');
+        cardCell.appendChild(createEditableCell(item.cardNumber, item.row, 'cardNumber'));
+        tr.appendChild(cardCell);
+        
+        const visitsCell = document.createElement('td');
         const visitsSpan = document.createElement('span');
         visitsSpan.className = 'visits-badge';
         visitsSpan.textContent = item.visits || 0;
         visitsCell.appendChild(visitsSpan);
         tr.appendChild(visitsCell);
         
-        const balanceCell = createCellFast(formatNumber(item.balance));
+        const balanceCell = document.createElement('td');
+        balanceCell.textContent = formatNumber(item.balance);
         balanceCell.className = getBalanceClass(item.balance);
         tr.appendChild(balanceCell);
         
-        // Скрытая ячейка для даты регистрации (не отображается)
         const registrationCell = document.createElement('td');
         registrationCell.className = 'registration-date-col';
-        registrationCell.textContent = ''; // Не отображаем
+        registrationCell.textContent = '';
         tr.appendChild(registrationCell);
         
-        const actionCell = createCellFast('');
+        const actionCell = document.createElement('td');
         actionCell.className = 'action-buttons';
         
         const childFullName = `${item.childSurname || ''} ${item.childName || ''}`.trim();
@@ -1088,15 +1209,102 @@ function createFullTable(data) {
     tableBodyRef = tbody;
 }
 
-function createCellFast(content, className = '') {
-    const td = document.createElement('td');
-    if (typeof content === 'string') {
-        td.textContent = content;
-    } else {
-        td.appendChild(content);
+function openEditModal(row, field, currentValue) {
+    const modal = document.getElementById('editModal');
+    document.getElementById('editRow').value = row;
+    document.getElementById('editField').value = field;
+    
+    const fieldInfo = FIELD_MAP[field];
+    if (fieldInfo) {
+        document.getElementById('editModalTitle').textContent = `Редагувати: ${fieldInfo.label}`;
+        document.getElementById('editFieldLabel').textContent = fieldInfo.label;
     }
-    if (className) td.className = className;
-    return td;
+    
+    const input = document.getElementById('editFieldValue');
+    if (field === 'birthday') {
+        if (currentValue) {
+            let date;
+            if (currentValue instanceof Date) {
+                date = currentValue;
+            } else {
+                date = new Date(currentValue);
+            }
+            if (!isNaN(date.getTime())) {
+                input.value = date.toISOString().split('T')[0];
+            } else {
+                input.value = '';
+            }
+        } else {
+            input.value = '';
+        }
+        input.type = 'date';
+    } else {
+        input.type = 'text';
+        input.value = currentValue || '';
+    }
+    
+    modal.classList.add('active');
+    input.focus();
+    input.select();
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').classList.remove('active');
+}
+
+async function saveEdit() {
+    const row = parseInt(document.getElementById('editRow').value);
+    const field = document.getElementById('editField').value;
+    let value = document.getElementById('editFieldValue').value.trim();
+    
+    if (field === 'birthday') {
+        if (value) {
+            const date = new Date(value);
+            if (!isNaN(date.getTime())) {
+                value = date.toISOString();
+            } else {
+                showToast('Некоректна дата', true);
+                return;
+            }
+        } else {
+            value = null;
+        }
+    }
+    
+    if (!value && field !== 'birthday') {
+        showToast('Значення не може бути порожнім', true);
+        return;
+    }
+    
+    const submitBtn = document.getElementById('submitEditBtn');
+    const originalHtml = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="btn-spinner"></span>';
+    
+    try {
+        const result = await callScript('updateUser', {
+            row: row,
+            field: field,
+            value: value
+        });
+        
+        if (result.error) throw new Error(result.error);
+        
+        const updatedItem = allData.find(item => item.row === row);
+        if (updatedItem) {
+            updatedItem[field] = value;
+        }
+        
+        closeEditModal();
+        applyFilters();
+        showToast(`✅ Дані успішно оновлено`);
+    } catch (err) {
+        showToast(`Помилка: ${err.message}`, true);
+        await loadData(false);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalHtml;
+    }
 }
 
 async function handleDeposit(row, parentName, childFullName, button) {
@@ -1245,20 +1453,7 @@ function closeAddModal() {
     document.getElementById('addModal').classList.remove('active');
 }
 
-function createCell(content, className = '') {
-    const td = document.createElement('td');
-    if (typeof content === 'string') {
-        td.textContent = content;
-    } else {
-        td.appendChild(content);
-    }
-    if (className) td.className = className;
-    return td;
-}
-
-// СУПЕР БЫСТРАЯ ОЧИСТКА - без задержек и без пересоздания таблицы
 function clearSearch() {
-    // Очищаем поля
     document.getElementById('parentSearch').value = '';
     document.getElementById('phoneSearch').value = '';
     document.getElementById('childSurnameSearch').value = '';
@@ -1266,7 +1461,6 @@ function clearSearch() {
     document.getElementById('cardSearch').value = '';
     document.getElementById('birthdaySearch').value = '';
     
-    // Мгновенно показываем все данные без пересоздания таблицы
     if (allData.length > 0) {
         currentFilteredData = [...allData];
         renderTableFast(currentFilteredData);
@@ -1293,8 +1487,10 @@ function handleKeyPress(e) {
 }
 
 window.onclick = function(event) {
-    const modal = document.getElementById('addModal');
-    if (event.target === modal) closeAddModal();
+    const addModal = document.getElementById('addModal');
+    const editModal = document.getElementById('editModal');
+    if (event.target === addModal) closeAddModal();
+    if (event.target === editModal) closeEditModal();
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -1317,6 +1513,9 @@ window.applyFilters = applyFilters;
 window.openAddModal = openAddModal;
 window.closeAddModal = closeAddModal;
 window.addNewUser = addNewUser;
+window.openEditModal = openEditModal;
+window.closeEditModal = closeEditModal;
+window.saveEdit = saveEdit;
 </script>
 </body>
 </html>
