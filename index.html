@@ -541,6 +541,11 @@ body {
     background: #0160d4;
 }
 
+/* Скрытая колонка для даты регистрации */
+.registration-date-col {
+    display: none !important;
+}
+
 @media (max-width: 768px) {
     :root {
         --side-padding: 16px;
@@ -741,7 +746,7 @@ body {
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJrV2rrfc-YvRroHWFmk1eMrhj48kyRRFiw_v2P2QuCsWoi8egSJcNBFhrqjsyITFnTA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHcZEbi6E5zGO6tEBCWQfVY_UB-BWBKSHQwMq7-beGSKw_-KpY9d6_nVIKHbOEfBI98A/exec';
 
 let allData = [];
 let isLoading = false;
@@ -948,6 +953,12 @@ function renderTableFast(data) {
         balanceCell.className = getBalanceClass(item.balance);
         tr.appendChild(balanceCell);
         
+        // Скрытая ячейка для даты регистрации (не отображается)
+        const registrationCell = document.createElement('td');
+        registrationCell.className = 'registration-date-col';
+        registrationCell.textContent = ''; // Не отображаем
+        tr.appendChild(registrationCell);
+        
         const actionCell = createCellFast('');
         actionCell.className = 'action-buttons';
         
@@ -993,11 +1004,20 @@ function createFullTable(data) {
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Дата народж.', 'Номер картки', 'Відв.', 'Баланс', 'Дії'];
+    
+    // Создаем заголовки
     headers.forEach(text => {
         const th = document.createElement('th');
         th.textContent = text;
         headerRow.appendChild(th);
     });
+    
+    // Добавляем скрытый заголовок для даты регистрации
+    const hiddenTh = document.createElement('th');
+    hiddenTh.className = 'registration-date-col';
+    hiddenTh.textContent = 'Дата реєстрації';
+    headerRow.appendChild(hiddenTh);
+    
     thead.appendChild(headerRow);
     table.appendChild(thead);
     
@@ -1023,6 +1043,12 @@ function createFullTable(data) {
         const balanceCell = createCellFast(formatNumber(item.balance));
         balanceCell.className = getBalanceClass(item.balance);
         tr.appendChild(balanceCell);
+        
+        // Скрытая ячейка для даты регистрации (не отображается)
+        const registrationCell = document.createElement('td');
+        registrationCell.className = 'registration-date-col';
+        registrationCell.textContent = ''; // Не отображаем
+        tr.appendChild(registrationCell);
         
         const actionCell = createCellFast('');
         actionCell.className = 'action-buttons';
