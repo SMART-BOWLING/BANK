@@ -15,7 +15,6 @@
     --success: #10b981;
     --warning: #f59e0b;
     --primary: #3b82f6;
-    --side-padding: 70px;
 }
 
 * {
@@ -34,7 +33,7 @@ body {
 .wrapper {
     max-width: 100%;
     margin: 0;
-    padding: 0 var(--side-padding);
+    padding: 0;
 }
 
 .header {
@@ -588,10 +587,6 @@ tr:hover .btn-edit-cell {
 }
 
 @media (max-width: 768px) {
-    :root {
-        --side-padding: 16px;
-    }
-    
     .header-row {
         flex-direction: column;
         align-items: stretch;
@@ -643,10 +638,6 @@ tr:hover .btn-edit-cell {
 }
 
 @media (max-width: 480px) {
-    :root {
-        --side-padding: 12px;
-    }
-    
     .search-btn, .clear-btn, .refresh-btn, .add-btn {
         width: 55px;
         min-width: 55px;
@@ -726,6 +717,10 @@ tr:hover .btn-edit-cell {
                     <div class="search-field">
                         <label><i class="fas fa-calendar-alt"></i> Вік дитини</label>
                         <input type="number" id="ageSearch" placeholder="Вік (років)" min="0" max="18">
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-clock"></i> Останній візит</label>
+                        <input type="date" id="lastVisitSearch">
                     </div>
                 </div>
             </div>
@@ -871,6 +866,23 @@ function formatDateTime(dateValue) {
     return `${d}.${m}.${y} ${h}:${min}`;
 }
 
+function formatDateForCompare(dateValue) {
+    if (!dateValue) return null;
+    let date;
+    if (dateValue instanceof Date) {
+        date = dateValue;
+    } else if (typeof dateValue === 'string') {
+        date = new Date(dateValue);
+        if (isNaN(date.getTime())) return null;
+    } else if (typeof dateValue === 'number') {
+        date = new Date(dateValue);
+    } else {
+        return null;
+    }
+    if (isNaN(date.getTime())) return null;
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
 function calculateAge(birthdayValue) {
     if (!birthdayValue) return null;
     let birthDate;
@@ -987,6 +999,7 @@ function applyFilters() {
     const childNameFilter = document.getElementById('childNameSearch').value.toLowerCase().trim();
     const cardFilter = document.getElementById('cardSearch').value.toLowerCase().trim();
     const ageSearch = document.getElementById('ageSearch').value;
+    const lastVisitSearch = document.getElementById('lastVisitSearch').value;
     
     let filtered = [...allData];
     
@@ -1013,6 +1026,15 @@ function applyFilters() {
                 return age !== null && age === ageNum;
             });
         }
+    }
+    if (lastVisitSearch) {
+        const searchDate = new Date(lastVisitSearch);
+        searchDate.setHours(0, 0, 0, 0);
+        filtered = filtered.filter(item => {
+            if (!item.lastVisit) return false;
+            const itemDate = formatDateForCompare(item.lastVisit);
+            return itemDate && itemDate.getTime() === searchDate.getTime();
+        });
     }
     
     currentFilteredData = filtered;
@@ -1515,6 +1537,7 @@ function clearSearch() {
     document.getElementById('childNameSearch').value = '';
     document.getElementById('cardSearch').value = '';
     document.getElementById('ageSearch').value = '';
+    document.getElementById('lastVisitSearch').value = '';
     
     if (allData.length > 0) {
         currentFilteredData = [...allData];
@@ -1558,6 +1581,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('childNameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('cardSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('ageSearch').addEventListener('keypress', handleKeyPress);
+    document.getElementById('lastVisitSearch').addEventListener('change', applyFilters);
     
     loadData(true);
 });
