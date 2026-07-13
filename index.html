@@ -18,8 +18,6 @@
     --side-padding: 70px;
 }
 
-
-
 * {
     margin: 0;
     padding: 0;
@@ -578,9 +576,15 @@ tr:hover .btn-edit-cell {
     transform: scale(1.1);
 }
 
-/* Скрытая колонка для даты регистрации */
-.registration-date-col {
-    display: none !important;
+/* Стиль для колонки последнего визита */
+.last-visit-col {
+    font-weight: 600;
+    color: #374151;
+}
+
+.last-visit-col .last-visit-empty {
+    color: #9ca3af;
+    font-weight: 400;
 }
 
 @media (max-width: 768px) {
@@ -720,8 +724,8 @@ tr:hover .btn-edit-cell {
                         <input type="text" id="cardSearch" placeholder="Пошук...">
                     </div>
                     <div class="search-field">
-                        <label><i class="fas fa-calendar-alt"></i> Дата народження</label>
-                        <input type="date" id="birthdaySearch">
+                        <label><i class="fas fa-calendar-alt"></i> Вік дитини</label>
+                        <input type="number" id="ageSearch" placeholder="Вік (років)" min="0" max="18">
                     </div>
                 </div>
             </div>
@@ -769,27 +773,27 @@ tr:hover .btn-edit-cell {
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <label><i class="fas fa-user-tag"></i> ПІБ дорослого *</label>
+                <label><i class="fas fa-user-tag"></i> ПІБ дорослого</label>
                 <input type="text" id="addParent" placeholder="ПІБ мами/тата">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-phone-alt"></i> Мобільний телефон *</label>
+                <label><i class="fas fa-phone-alt"></i> Мобільний телефон</label>
                 <input type="text" id="addPhone" placeholder="+38 XXX XXX XX XX">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-user"></i> Прізвище дитини *</label>
+                <label><i class="fas fa-user"></i> Прізвище дитини</label>
                 <input type="text" id="addChildSurname" placeholder="Прізвище дитини">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-user"></i> Ім'я дитини *</label>
+                <label><i class="fas fa-user"></i> Ім'я дитини</label>
                 <input type="text" id="addChildName" placeholder="Ім'я дитини">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-calendar-alt"></i> Дата народження дитини</label>
-                <input type="date" id="addBirthday">
+                <label><i class="fas fa-calendar-alt"></i> Вік дитини (років)</label>
+                <input type="number" id="addChildAge" placeholder="Вік дитини" min="0" max="18">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-credit-card"></i> Номер картки *</label>
+                <label><i class="fas fa-credit-card"></i> Номер картки</label>
                 <input type="text" id="addCardNumber" placeholder="Номер картки">
             </div>
             <div class="form-group">
@@ -809,7 +813,7 @@ tr:hover .btn-edit-cell {
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxN4jHAMmb1iabgIH_KuKfYIBBSDNhpfMVEhjklyzN20tc5jahxnGlZ6N-XT9lm6K9D5A/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzKXyHErXZOgYv8Wq3IUZRWCH6KOMOLN5gaNa4bF7-EO-gTeD0fetkIIdVQnYy9Gt-y5w/exec';
 
 let allData = [];
 let isLoading = false;
@@ -821,7 +825,7 @@ const FIELD_MAP = {
     'phone': { label: 'Телефон', column: 2 },
     'childSurname': { label: 'Прізвище дитини', column: 3 },
     'childName': { label: "Ім'я дитини", column: 4 },
-    'birthday': { label: 'Дата народження', column: 5 },
+    'age': { label: 'Вік дитини', column: 5 },
     'cardNumber': { label: 'Номер картки', column: 6 }
 };
 
@@ -845,21 +849,50 @@ function formatDate(dateValue) {
     return `${d}.${m}.${y}`;
 }
 
-function formatDateForCompare(dateValue) {
-    if (!dateValue) return null;
+function formatDateTime(dateValue) {
+    if (!dateValue) return '—';
     let date;
     if (dateValue instanceof Date) {
         date = dateValue;
     } else if (typeof dateValue === 'string') {
         date = new Date(dateValue);
-        if (isNaN(date.getTime())) return null;
+        if (isNaN(date.getTime())) return dateValue;
     } else if (typeof dateValue === 'number') {
         date = new Date(dateValue);
     } else {
+        return '—';
+    }
+    if (isNaN(date.getTime())) return '—';
+    const d = String(date.getDate()).padStart(2, '0');
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const y = date.getFullYear();
+    const h = String(date.getHours()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
+    return `${d}.${m}.${y} ${h}:${min}`;
+}
+
+function calculateAge(birthdayValue) {
+    if (!birthdayValue) return null;
+    let birthDate;
+    if (birthdayValue instanceof Date) {
+        birthDate = birthdayValue;
+    } else if (typeof birthdayValue === 'string') {
+        birthDate = new Date(birthdayValue);
+        if (isNaN(birthDate.getTime())) return null;
+    } else if (typeof birthdayValue === 'number') {
+        birthDate = new Date(birthdayValue);
+    } else {
         return null;
     }
-    if (isNaN(date.getTime())) return null;
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    if (isNaN(birthDate.getTime())) return null;
+    
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
 }
 
 function formatNumber(value) {
@@ -953,7 +986,7 @@ function applyFilters() {
     const childSurnameFilter = document.getElementById('childSurnameSearch').value.toLowerCase().trim();
     const childNameFilter = document.getElementById('childNameSearch').value.toLowerCase().trim();
     const cardFilter = document.getElementById('cardSearch').value.toLowerCase().trim();
-    const birthdaySearch = document.getElementById('birthdaySearch').value;
+    const ageSearch = document.getElementById('ageSearch').value;
     
     let filtered = [...allData];
     
@@ -972,13 +1005,14 @@ function applyFilters() {
     if (cardFilter) {
         filtered = filtered.filter(item => item.cardNumber && item.cardNumber.toLowerCase().includes(cardFilter));
     }
-    if (birthdaySearch) {
-        const searchDate = new Date(birthdaySearch);
-        searchDate.setHours(0, 0, 0, 0);
-        filtered = filtered.filter(item => {
-            const itemDate = formatDateForCompare(item.birthday);
-            return itemDate && itemDate.getTime() === searchDate.getTime();
-        });
+    if (ageSearch !== '') {
+        const ageNum = parseInt(ageSearch);
+        if (!isNaN(ageNum) && ageNum >= 0) {
+            filtered = filtered.filter(item => {
+                const age = calculateAge(item.age);
+                return age !== null && age === ageNum;
+            });
+        }
     }
     
     currentFilteredData = filtered;
@@ -991,7 +1025,12 @@ function createEditableCell(value, row, field, isDate = false) {
     
     const span = document.createElement('span');
     span.className = 'cell-value';
-    span.textContent = isDate ? formatDate(value) : (value || '—');
+    if (field === 'age') {
+        const age = calculateAge(value);
+        span.textContent = age !== null ? `${age} років` : '—';
+    } else {
+        span.textContent = isDate ? formatDate(value) : (value || '—');
+    }
     
     const editBtn = document.createElement('button');
     editBtn.className = 'btn-edit-cell';
@@ -1018,14 +1057,21 @@ function renderTableFast(data) {
         return;
     }
     
+    // Сортуємо: нові записи зверху (за датою реєстрації)
+    const sortedData = [...data].sort((a, b) => {
+        const dateA = a.registrationDate ? new Date(a.registrationDate) : new Date(0);
+        const dateB = b.registrationDate ? new Date(b.registrationDate) : new Date(0);
+        return dateB - dateA;
+    });
+    
     if (!tableBodyRef || !document.querySelector('.data-table')) {
-        createFullTable(data);
+        createFullTable(sortedData);
         return;
     }
     
     const tbody = document.createElement('tbody');
     
-    data.forEach(item => {
+    sortedData.forEach(item => {
         const tr = document.createElement('tr');
         
         const parentCell = document.createElement('td');
@@ -1044,9 +1090,9 @@ function renderTableFast(data) {
         nameCell.appendChild(createEditableCell(item.childName, item.row, 'childName'));
         tr.appendChild(nameCell);
         
-        const birthdayCell = document.createElement('td');
-        birthdayCell.appendChild(createEditableCell(item.birthday, item.row, 'birthday', true));
-        tr.appendChild(birthdayCell);
+        const ageCell = document.createElement('td');
+        ageCell.appendChild(createEditableCell(item.age, item.row, 'age'));
+        tr.appendChild(ageCell);
         
         const cardCell = document.createElement('td');
         cardCell.appendChild(createEditableCell(item.cardNumber, item.row, 'cardNumber'));
@@ -1064,10 +1110,16 @@ function renderTableFast(data) {
         balanceCell.className = getBalanceClass(item.balance);
         tr.appendChild(balanceCell);
         
-        const registrationCell = document.createElement('td');
-        registrationCell.className = 'registration-date-col';
-        registrationCell.textContent = '';
-        tr.appendChild(registrationCell);
+        const lastVisitCell = document.createElement('td');
+        lastVisitCell.className = 'last-visit-col';
+        if (item.lastVisit) {
+            lastVisitCell.textContent = formatDateTime(item.lastVisit);
+            lastVisitCell.style.color = '#374151';
+        } else {
+            lastVisitCell.textContent = '—';
+            lastVisitCell.className = 'last-visit-col last-visit-empty';
+        }
+        tr.appendChild(lastVisitCell);
         
         const actionCell = document.createElement('td');
         actionCell.className = 'action-buttons';
@@ -1112,18 +1164,13 @@ function createFullTable(data) {
     
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Дата народження', 'Номер картки', 'Відвідування', 'Баланс', 'Дії'];
+    const headers = ['ПІБ дорослого', 'Телефон', 'Прізвище дитини', "Ім'я дитини", 'Вік дитини', 'Номер картки', 'Відвідування', 'Баланс', 'Останній візит', 'Дії'];
     
     headers.forEach(text => {
         const th = document.createElement('th');
         th.textContent = text;
         headerRow.appendChild(th);
     });
-    
-    const hiddenTh = document.createElement('th');
-    hiddenTh.className = 'registration-date-col';
-    hiddenTh.textContent = 'Дата реєстрації';
-    headerRow.appendChild(hiddenTh);
     
     thead.appendChild(headerRow);
     table.appendChild(thead);
@@ -1149,9 +1196,9 @@ function createFullTable(data) {
         nameCell.appendChild(createEditableCell(item.childName, item.row, 'childName'));
         tr.appendChild(nameCell);
         
-        const birthdayCell = document.createElement('td');
-        birthdayCell.appendChild(createEditableCell(item.birthday, item.row, 'birthday', true));
-        tr.appendChild(birthdayCell);
+        const ageCell = document.createElement('td');
+        ageCell.appendChild(createEditableCell(item.age, item.row, 'age'));
+        tr.appendChild(ageCell);
         
         const cardCell = document.createElement('td');
         cardCell.appendChild(createEditableCell(item.cardNumber, item.row, 'cardNumber'));
@@ -1169,10 +1216,16 @@ function createFullTable(data) {
         balanceCell.className = getBalanceClass(item.balance);
         tr.appendChild(balanceCell);
         
-        const registrationCell = document.createElement('td');
-        registrationCell.className = 'registration-date-col';
-        registrationCell.textContent = '';
-        tr.appendChild(registrationCell);
+        const lastVisitCell = document.createElement('td');
+        lastVisitCell.className = 'last-visit-col';
+        if (item.lastVisit) {
+            lastVisitCell.textContent = formatDateTime(item.lastVisit);
+            lastVisitCell.style.color = '#374151';
+        } else {
+            lastVisitCell.textContent = '—';
+            lastVisitCell.className = 'last-visit-col last-visit-empty';
+        }
+        tr.appendChild(lastVisitCell);
         
         const actionCell = document.createElement('td');
         actionCell.className = 'action-buttons';
@@ -1181,7 +1234,7 @@ function createFullTable(data) {
         
         const depositBtn = document.createElement('button');
         depositBtn.className = 'btn-operation btn-deposit';
-        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Покласти';
+        depositBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Поповнення';
         depositBtn.onclick = (e) => {
             e.preventDefault();
             handleDeposit(item.row, item.parent, childFullName, depositBtn);
@@ -1222,23 +1275,13 @@ function openEditModal(row, field, currentValue) {
     }
     
     const input = document.getElementById('editFieldValue');
-    if (field === 'birthday') {
-        if (currentValue) {
-            let date;
-            if (currentValue instanceof Date) {
-                date = currentValue;
-            } else {
-                date = new Date(currentValue);
-            }
-            if (!isNaN(date.getTime())) {
-                input.value = date.toISOString().split('T')[0];
-            } else {
-                input.value = '';
-            }
-        } else {
-            input.value = '';
-        }
-        input.type = 'date';
+    if (field === 'age') {
+        const age = calculateAge(currentValue);
+        input.type = 'number';
+        input.value = age !== null ? age : '';
+        input.placeholder = 'Введіть вік (років)';
+        input.min = 0;
+        input.max = 18;
     } else {
         input.type = 'text';
         input.value = currentValue || '';
@@ -1258,21 +1301,20 @@ async function saveEdit() {
     const field = document.getElementById('editField').value;
     let value = document.getElementById('editFieldValue').value.trim();
     
-    if (field === 'birthday') {
-        if (value) {
-            const date = new Date(value);
-            if (!isNaN(date.getTime())) {
-                value = date.toISOString();
-            } else {
-                showToast('Некоректна дата', true);
-                return;
-            }
-        } else {
-            value = null;
+    if (field === 'age') {
+        const ageNum = parseInt(value);
+        if (isNaN(ageNum) || ageNum < 0 || ageNum > 18) {
+            showToast('Введіть коректний вік (0-18 років)', true);
+            return;
         }
+        const today = new Date();
+        const birthDate = new Date(today);
+        birthDate.setFullYear(today.getFullYear() - ageNum);
+        birthDate.setMonth(0, 1);
+        value = birthDate.toISOString();
     }
     
-    if (!value && field !== 'birthday') {
+    if (!value && field !== 'age') {
         showToast('Значення не може бути порожнім', true);
         return;
     }
@@ -1293,7 +1335,11 @@ async function saveEdit() {
         
         const updatedItem = allData.find(item => item.row === row);
         if (updatedItem) {
-            updatedItem[field] = value;
+            if (field === 'age') {
+                updatedItem.age = value;
+            } else {
+                updatedItem[field] = value;
+            }
         }
         
         closeEditModal();
@@ -1335,6 +1381,7 @@ async function handleDeposit(row, parentName, childFullName, button) {
             if (!isNaN(currentBalance)) {
                 updatedItem.balance = (currentBalance + totalAmount).toString();
             }
+            updatedItem.lastVisit = new Date().toISOString();
         }
         
         applyFilters();
@@ -1375,6 +1422,7 @@ async function handleWithdraw(row, parentName, childFullName, button) {
             if (updatedItem.visits !== undefined) {
                 updatedItem.visits = (parseInt(updatedItem.visits) || 0) + 1;
             }
+            updatedItem.lastVisit = new Date().toISOString();
         }
         
         applyFilters();
@@ -1393,18 +1441,24 @@ async function addNewUser() {
     const phone = document.getElementById('addPhone').value.trim();
     const childSurname = document.getElementById('addChildSurname').value.trim();
     const childName = document.getElementById('addChildName').value.trim();
-    const birthday = document.getElementById('addBirthday').value;
+    const childAge = document.getElementById('addChildAge').value;
     const cardNumber = document.getElementById('addCardNumber').value.trim();
     let balance = parseFloat(document.getElementById('addBalance').value);
     
     if (isNaN(balance)) balance = 0;
     const visits = 1;
     
-    if (!parent) { showToast("Введіть ПІБ дорослого", true); return; }
-    if (!phone) { showToast("Введіть телефон", true); return; }
-    if (!childSurname) { showToast("Введіть прізвище дитини", true); return; }
-    if (!childName) { showToast("Введіть ім'я дитини", true); return; }
-    if (!cardNumber) { showToast("Введіть номер картки", true); return; }
+    let birthday = null;
+    if (childAge !== '') {
+        const ageNum = parseInt(childAge);
+        if (!isNaN(ageNum) && ageNum >= 0 && ageNum <= 18) {
+            const today = new Date();
+            const birthDate = new Date(today);
+            birthDate.setFullYear(today.getFullYear() - ageNum);
+            birthDate.setMonth(0, 1);
+            birthday = birthDate.toISOString();
+        }
+    }
     
     const submitBtn = document.getElementById('submitAddBtn');
     const originalHtml = submitBtn.innerHTML;
@@ -1414,12 +1468,12 @@ async function addNewUser() {
     
     try {
         const result = await callScript('addUser', { 
-            parent: parent,
-            phone: phone,
-            childSurname: childSurname,
-            childName: childName,
-            birthday: birthday || null,
-            cardNumber: cardNumber,
+            parent: parent || '',
+            phone: phone || '',
+            childSurname: childSurname || '',
+            childName: childName || '',
+            birthday: birthday,
+            cardNumber: cardNumber || '',
             visits: visits,
             balance: balance
         });
@@ -1434,7 +1488,7 @@ async function addNewUser() {
         document.getElementById('addPhone').value = '';
         document.getElementById('addChildSurname').value = '';
         document.getElementById('addChildName').value = '';
-        document.getElementById('addBirthday').value = '';
+        document.getElementById('addChildAge').value = '';
         document.getElementById('addCardNumber').value = '';
         document.getElementById('addBalance').value = '0';
         
@@ -1460,7 +1514,7 @@ function clearSearch() {
     document.getElementById('childSurnameSearch').value = '';
     document.getElementById('childNameSearch').value = '';
     document.getElementById('cardSearch').value = '';
-    document.getElementById('birthdaySearch').value = '';
+    document.getElementById('ageSearch').value = '';
     
     if (allData.length > 0) {
         currentFilteredData = [...allData];
@@ -1503,7 +1557,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('childSurnameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('childNameSearch').addEventListener('keypress', handleKeyPress);
     document.getElementById('cardSearch').addEventListener('keypress', handleKeyPress);
-    document.getElementById('birthdaySearch').addEventListener('change', applyFilters);
+    document.getElementById('ageSearch').addEventListener('keypress', handleKeyPress);
     
     loadData(true);
 });
